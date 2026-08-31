@@ -241,7 +241,7 @@ export const EXERCISE_TERM_TRANSLATIONS: Record<string, string> = {
   // ajuda de leitura / conectores comuns em nomes
   and: 'e',
   with: 'com',
-  on: 'no',
+  on: 'em',
   in: 'em',
   the: 'o',
   a: 'um',
@@ -253,6 +253,39 @@ export const EXERCISE_TERM_TRANSLATIONS: Record<string, string> = {
   both: 'ambos',
   one: 'um',
   two: 'dois',
+  sit: 'sente-se',
+  seat: 'banco',
+  so: 'para que',
+  aligned: 'alinhado',
+  pivot: 'pivô',
+  fully: 'totalmente',
+  without: 'sem',
+  letting: 'deixar',
+  touch: 'tocar',
+  avoid: 'evite',
+  arching: 'arquear',
+  during: 'durante',
+  gripping: 'segurando',
+  // termos que faltavam e ficavam sem tradução (ex.: "center", "other", "palms")
+  adjust: 'ajuste',
+  adjustable: 'ajustável',
+  pulley: 'polia',
+  pulleys: 'polias',
+  center: 'centro',
+  other: 'outro',
+  palm: 'palma',
+  palms: 'palmas',
+  facing: 'voltado',
+  extended: 'estendido',
+  out: 'para fora',
+  sides: 'lados',
+  variation: 'variação',
+  variations: 'variações',
+  'cross-over': 'cruzado',
+  width: 'largura',
+  target: 'alvo',
+  muscle: 'músculo',
+  muscles: 'músculos',
 }
 
 function preserveCase(original: string, translated: string): string {
@@ -273,10 +306,99 @@ function translateByTokens(text: string, extraDict?: Record<string, string>) {
   })
 }
 
+/**
+ * Contrações preposição + artigo em PT-BR. A tradução por token nunca vai
+ * "contrair" sozinha (produz "em o", "de a" etc.) — isso corrige o caso
+ * mais comum e visível de português quebrado, aplicado como última etapa
+ * em qualquer texto que passe pelos dicionários acima.
+ */
+const CONTRACTIONS: [RegExp, string][] = [
+  [/\bde o\b/gi, 'do'],
+  [/\bde a\b/gi, 'da'],
+  [/\bde os\b/gi, 'dos'],
+  [/\bde as\b/gi, 'das'],
+  [/\bem o\b/gi, 'no'],
+  [/\bem a\b/gi, 'na'],
+  [/\bem os\b/gi, 'nos'],
+  [/\bem as\b/gi, 'nas'],
+  [/\ba o\b/gi, 'ao'],
+  [/\ba os\b/gi, 'aos'],
+]
+
+function fixContractions(text: string): string {
+  let result = text
+  for (const [pattern, replacement] of CONTRACTIONS) {
+    result = result.replace(pattern, (match) => preserveCase(match, replacement))
+  }
+  return result
+}
+
 /** Traduz o nome de um exercício vindo da API (ex.: "barbell bench press" → "Barra Banco Supino"), com capitalização de título. */
 export function translateExerciseName(name: string): string {
-  const translated = translateByTokens(name.trim())
-  return titleCase(translated.toLowerCase())
+  const translated = translateByTokens(translatePhrases(name.trim()))
+  return titleCase(fixContractions(translated).toLowerCase())
+}
+
+/**
+ * Frases inteiras muito comuns nas instruções do exercisedb-api. Tradução
+ * por frase evita os erros de ordem de palavras que a tradução por token
+ * sozinha não resolve (ex.: "in front of the other" não vira "em frontal
+ * de o other" — vira "na frente do outro" direto). Aplicadas ANTES da
+ * tradução por token, da mais específica para a mais genérica.
+ */
+const PHRASE_TRANSLATIONS: [RegExp, string][] = [
+  [/^grip the\b/gi, 'Segure a'],
+  [/\bof the cable machine\b/gi, 'da máquina de polia'],
+  [/\bthe cable pulleys\b/gi, 'as polias'],
+  [/\bcable pulleys\b/gi, 'polias'],
+  [/\bcable pulley\b/gi, 'polia'],
+  [/\bcable machine\b/gi, 'máquina de polia'],
+  [/\bto chest height\b/gi, 'na altura do peito'],
+  [/\bchest height\b/gi, 'altura do peito'],
+  [/\bthe handles\b/gi, 'as alças'],
+  [/\bthe handle\b/gi, 'a alça'],
+  [/\byour lower back\b/gi, 'sua lombar'],
+  [/\blower back\b/gi, 'lombar'],
+  [/\btoward each other\b/gi, 'em direção um ao outro'],
+  [/\btowards each other\b/gi, 'em direção um ao outro'],
+  [/\beach other\b/gi, 'um ao outro'],
+  [/\bin front of the other\b/gi, 'na frente do outro'],
+  [/\bin front of your chest\b/gi, 'à frente do peito'],
+  [/\bin front of you\b/gi, 'à sua frente'],
+  [/\bshoulder-width apart\b/gi, 'na largura dos ombros'],
+  [/\bshoulder width apart\b/gi, 'na largura dos ombros'],
+  [/\bhip-width apart\b/gi, 'na largura do quadril'],
+  [/\bwith your palms facing down\b/gi, 'com as palmas voltadas para baixo'],
+  [/\bwith your palms facing up\b/gi, 'com as palmas voltadas para cima'],
+  [/\bpalms facing down\b/gi, 'palmas voltadas para baixo'],
+  [/\bpalms facing up\b/gi, 'palmas voltadas para cima'],
+  [/\bpalms facing each other\b/gi, 'palmas voltadas uma para a outra'],
+  [/\bextended out to the sides\b/gi, 'estendidos para os lados'],
+  [/\bout to the sides\b/gi, 'para os lados'],
+  [/\bin the center of\b/gi, 'no centro de'],
+  [/\breturn to the starting position\b/gi, 'retorne à posição inicial'],
+  [/\breturn to starting position\b/gi, 'retorne à posição inicial'],
+  [/\bback to the starting position\b/gi, 'de volta à posição inicial'],
+  [/\bthe starting position\b/gi, 'a posição inicial'],
+  [/\bin a controlled motion\b/gi, 'de forma controlada'],
+  [/\bin a slow and controlled motion\b/gi, 'de forma lenta e controlada'],
+  [/\bslowly lower\b/gi, 'abaixe lentamente'],
+  [/\brepeat for the desired number of repetitions\b/gi, 'repita pelo número de repetições desejado'],
+  [/\bfor the desired number of repetitions\b/gi, 'pelo número de repetições desejado'],
+  [/\bkeep your back straight\b/gi, 'mantenha as costas retas'],
+  [/\byour back straight\b/gi, 'as costas retas'],
+  [/\bkeep your core engaged\b/gi, 'mantenha o core ativado'],
+  [/\bthroughout the movement\b/gi, 'durante todo o movimento'],
+  [/\btake a deep breath\b/gi, 'respire fundo'],
+  [/\bone foot in front of the other\b/gi, 'um pé à frente do outro'],
+]
+
+function translatePhrases(text: string): string {
+  let result = text
+  for (const [pattern, replacement] of PHRASE_TRANSLATIONS) {
+    result = result.replace(pattern, replacement)
+  }
+  return result
 }
 
 // Verbos e conectores extras, comuns em instruções passo a passo, que não
@@ -375,14 +497,21 @@ const INSTRUCTION_EXTRA_TERMS: Record<string, string> = {
   toward: 'em direção a',
   towards: 'em direção a',
   away: 'para longe',
+  are: 'estão',
+  is: 'está',
 }
 
 /**
- * Traduz uma instrução em texto livre, palavra a palavra, usando os
- * dicionários de vocabulário de exercício + músculos + verbos de instrução.
- * É uma tradução "melhor esforço": termos fora dos dicionários permanecem
- * em inglês em vez de arriscar uma tradução incorreta.
+ * Traduz uma instrução em texto livre: primeiro substitui frases inteiras
+ * conhecidas (evita erro de ordem de palavras), depois traduz o que sobrou
+ * palavra a palavra, corrige contrações preposição+artigo ("em o" → "no")
+ * e garante que a frase comece com maiúscula. É uma tradução "melhor
+ * esforço": termos fora dos dicionários permanecem em inglês em vez de
+ * arriscar uma tradução errada.
  */
 export function translateInstruction(step: string): string {
-  return translateByTokens(step, INSTRUCTION_EXTRA_TERMS)
+  const withPhrases = translatePhrases(step)
+  const withTokens = translateByTokens(withPhrases, INSTRUCTION_EXTRA_TERMS)
+  const fixed = fixContractions(withTokens).trim()
+  return fixed.charAt(0).toUpperCase() + fixed.slice(1)
 }

@@ -1,4 +1,5 @@
 import type { Exercise } from '@/types'
+import { generatedExercises } from '@/data/generatedExercises'
 
 export const exercises: Exercise[] = [
   {
@@ -1280,4 +1281,10 @@ export const exercises: Exercise[] = [
       substitutos: ['mobilidade-quadril-90-90', 'gato-camelo'],
     },
   },
+  // Os 46 exercícios acima são a biblioteca curada manualmente (textos
+  // autorais, com mais profundidade explicativa). A partir daqui entram
+  // os exercícios importados (ver src/data/generatedExercises.ts) — é o
+  // que dá a cobertura completa de grupo muscular + equipamento, todos
+  // com foto real.
+  ...generatedExercises,
 ]

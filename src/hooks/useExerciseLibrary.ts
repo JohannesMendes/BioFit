@@ -16,13 +16,15 @@ interface UseExerciseLibraryResult {
 /**
  * useExerciseLibrary
  * -------------------
- * Fonte primária: exercisedb-api (GIFs reais, dataset amplo).
- * Fonte de fallback: nossa biblioteca local curada (`src/data/exercises.ts`),
- * usada automaticamente se a API externa falhar (rede, CORS, rate limit,
- * instabilidade — o próprio endpoint gratuito não garante uptime).
+ * Fonte primária: nossa biblioteca local (`src/data/exercises.ts` — 46
+ * exercícios curados à mão + ~530 importados do dataset open-source
+ * exercicios-bd-ptbr/free-exercise-db, cobrindo os 12 grupos musculares
+ * com todo tipo de equipamento e SEMPRE com foto real).
  *
- * Isso é resolvido uma vez por sessão (a API service já cacheia em
- * memória), então trocar de tela não reconsulta a rede.
+ * Complemento opcional: se o exercisedb-api externo responder, seus
+ * exercícios são ACRESCENTADOS à lista local (nunca a substituem) — dá
+ * mais variedade quando ele está no ar, sem depender dele pra cobertura
+ * básica, já que o próprio endpoint gratuito não garante uptime.
  */
 export function useExerciseLibrary(): UseExerciseLibraryResult {
   const [state, setState] = useState<UseExerciseLibraryResult>({
@@ -42,12 +44,17 @@ export function useExerciseLibrary(): UseExerciseLibraryResult {
           exercises: localExercises,
           loading: false,
           source: 'local-fallback',
-          error: 'Não foi possível carregar o exercisedb-api agora — mostrando a biblioteca local do BioFit.',
+          error: null,
         })
         return
       }
+      // Mescla: local primeiro (garantido), API depois — descartando da
+      // API qualquer exercício com nome muito parecido a um já local,
+      // pra evitar duplicata óbvia mostrada duas vezes ao usuário.
+      const localNames = new Set(localExercises.map((e) => e.name.toLowerCase().trim()))
+      const extra = adaptExerciseDbList(raw).filter((e) => !localNames.has(e.name.toLowerCase().trim()))
       setState({
-        exercises: adaptExerciseDbList(raw),
+        exercises: [...localExercises, ...extra],
         loading: false,
         source: 'exercisedb',
         error: null,

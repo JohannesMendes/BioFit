@@ -5,7 +5,6 @@ export function AuthInput({
   value,
   onChange,
   error,
-  autoComplete = 'off',
 }: {
   label: string
   type?: string
@@ -13,7 +12,6 @@ export function AuthInput({
   value: string
   onChange: (v: string) => void
   error?: string
-  autoComplete?: string
 }) {
   return (
     <label className="flex flex-col gap-1.5">
@@ -23,7 +21,6 @@ export function AuthInput({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        autoComplete={autoComplete}
         className={`rounded-bio-md border bg-bio-surface px-3.5 py-3 font-body text-sm text-bio-paper placeholder:text-bio-ink-soft/60 focus:border-bio-lime ${
           error ? 'border-bio-danger' : 'border-bio-line'
         }`}

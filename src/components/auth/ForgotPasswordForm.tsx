@@ -3,13 +3,9 @@ import { Link } from 'react-router-dom'
 import { AuthInput } from '@/components/auth/AuthInput'
 import { MailCheck } from 'lucide-react'
 
-import { useAuth } from '@/context/AuthContext'
-
 export function ForgotPasswordForm() {
-  const { resetPassword } = useAuth()
   const [sent, setSent] = useState(false)
   const [email, setEmail] = useState('')
-  const [error, setError] = useState('')
 
   if (sent) {
     return (
@@ -30,34 +26,15 @@ export function ForgotPasswordForm() {
   return (
     <form
       className="flex flex-col gap-4"
-      onSubmit={async (e) => {
+      onSubmit={(e) => {
         e.preventDefault()
-        if (!email) {
-          setError('Informe um e-mail válido.')
-          return
-        }
-
-        const result = await resetPassword(email)
-        if (!result.ok) {
-          setError(result.error)
-          return
-        }
-
-        setError('')
         setSent(true)
       }}
     >
       <p className="font-body text-sm text-bio-ink-soft">
         Informe o e-mail da sua conta e enviaremos um link para redefinir sua senha.
       </p>
-      <AuthInput
-        label="E-mail"
-        type="email"
-        placeholder="voce@email.com"
-        value={email}
-        onChange={setEmail}
-        error={error}
-      />
+      <AuthInput label="E-mail" type="email" placeholder="voce@email.com" value={email} onChange={setEmail} />
       <button className="mt-1 rounded-bio-pill bg-bio-lime py-3.5 font-display text-sm font-bold text-bio-ink">
         Enviar link de redefinição
       </button>
