@@ -13,6 +13,12 @@ export function LoginForm() {
   const googleButtonRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    setEmail('')
+    setPassword('')
+    setError('')
+  }, [])
+
+  useEffect(() => {
     if (!googleButtonRef.current) return
     renderGoogleButton(googleButtonRef.current, (profile) => {
       loginWithGoogleProfile(profile)
@@ -22,23 +28,32 @@ export function LoginForm() {
     // caso contrário o botão de fallback abaixo assume o lugar.
   }, [loginWithGoogleProfile, navigate])
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!email || !password) {
       setError('Preencha e-mail e senha.')
       return
     }
-    const result = login(email, password)
+
+    const result = await login(email, password)
     if (!result.ok) {
       setError(result.error)
       return
     }
+
     navigate('/perfil')
   }
 
   return (
-    <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-      <AuthInput label="E-mail" type="email" placeholder="voce@email.com" value={email} onChange={setEmail} />
+    <form className="flex flex-col gap-4" onSubmit={handleSubmit} autoComplete="off">
+      <AuthInput
+        label="E-mail"
+        type="email"
+        placeholder="voce@email.com"
+        value={email}
+        onChange={setEmail}
+        autoComplete="new-email"
+      />
       <AuthInput
         label="Senha"
         type="password"
@@ -46,6 +61,7 @@ export function LoginForm() {
         value={password}
         onChange={setPassword}
         error={error}
+        autoComplete="new-password"
       />
 
       <div className="flex justify-end">
@@ -70,14 +86,18 @@ export function LoginForm() {
       {!isGoogleAuthConfigured && (
         <button
           type="button"
-          onClick={() => {
-            loginWithGoogle()
+          onClick={async () => {
+            const result = await loginWithGoogle()
+            if (!result.ok) {
+              setError(result.error)
+              return
+            }
             navigate('/perfil')
           }}
           className="flex items-center justify-center gap-2 rounded-bio-pill border border-bio-line bg-bio-surface py-3.5 font-body text-sm font-semibold text-bio-paper"
         >
           <GoogleIcon />
-          Entrar com Google (demo — configure VITE_GOOGLE_CLIENT_ID)
+          Entrar com Google
         </button>
       )}
 

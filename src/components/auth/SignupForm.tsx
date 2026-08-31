@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthInput } from '@/components/auth/AuthInput'
 import { ImageUploadField } from '@/components/auth/ImageUploadField'
@@ -14,7 +14,16 @@ export function SignupForm() {
   const [avatarUrl, setAvatarUrl] = useState('')
   const [error, setError] = useState('')
 
-  function handleSubmit(e: React.FormEvent) {
+  useEffect(() => {
+    setName('')
+    setEmail('')
+    setPassword('')
+    setConfirmPassword('')
+    setAvatarUrl('')
+    setError('')
+  }, [])
+
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!name || !email || !password) {
       setError('Preencha nome, e-mail e senha.')
@@ -24,24 +33,34 @@ export function SignupForm() {
       setError('As senhas não coincidem.')
       return
     }
-    const result = signup(name, email, password, avatarUrl || undefined)
+
+    const result = await signup(name, email, password, avatarUrl || undefined)
     if (!result.ok) {
       setError(result.error)
       return
     }
+
     navigate('/perfil')
   }
 
   return (
-    <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-      <AuthInput label="Nome completo" placeholder="Seu nome" value={name} onChange={setName} />
-      <AuthInput label="E-mail" type="email" placeholder="voce@email.com" value={email} onChange={setEmail} />
+    <form className="flex flex-col gap-4" onSubmit={handleSubmit} autoComplete="off">
+      <AuthInput label="Nome completo" placeholder="Seu nome" value={name} onChange={setName} autoComplete="off" />
+      <AuthInput
+        label="E-mail"
+        type="email"
+        placeholder="voce@email.com"
+        value={email}
+        onChange={setEmail}
+        autoComplete="new-email"
+      />
       <AuthInput
         label="Senha"
         type="password"
         placeholder="Mínimo 8 caracteres"
         value={password}
         onChange={setPassword}
+        autoComplete="new-password"
       />
       <AuthInput
         label="Confirmar senha"
@@ -50,6 +69,7 @@ export function SignupForm() {
         value={confirmPassword}
         onChange={setConfirmPassword}
         error={error}
+        autoComplete="new-password"
       />
 
       <ImageUploadField

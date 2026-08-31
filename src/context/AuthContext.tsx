@@ -1,139 +1,145 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
+import { onAuthStateChanged, updateProfile, type User as FirebaseUser } from 'firebase/auth'
+import {
+  auth,
+  cadastrarComEmail,
+  deslogar,
+  loginComEmail,
+  loginComGoogle,
+  redefinirSenha,
+} from '@/services/firebase'
 import type { AuthUser } from '@/types/auth'
-
-/**
- * AuthContext — autenticação MOCK baseada em localStorage.
- * -----------------------------------------------------------------
- * Isto resolve o problema de "o login não salva nada": agora cadastro e
- * login persistem entre reloads, e o avatar aparece na TopBar/Perfil.
- *
- * IMPORTANTE — isto NÃO é autenticação real:
- * - Senhas ficam em texto puro no localStorage do navegador.
- * - "Entrar com Google" aqui é simulado (gera um usuário de exemplo com
- *   avatar), pois OAuth de verdade exige um Client ID do Google Cloud +
- *   backend para trocar o token com segurança.
- * Antes de ir para produção, troque este arquivo por um provedor real:
- * Firebase Auth, Supabase Auth, ou seu próprio backend. A interface
- * exposta (useAuth) foi pensada para ser um drop-in replacement — as
- * telas de Login/Cadastro/Perfil não precisam mudar, só o "motor" aqui.
- */
-
-interface StoredAccount extends AuthUser {
-  password: string
-}
 
 interface AuthContextValue {
   user: AuthUser | null
-  login: (email: string, password: string) => { ok: true } | { ok: false; error: string }
+  login: (email: string, password: string) => Promise<{ ok: true } | { ok: false; error: string }>
   signup: (
     name: string,
     email: string,
     password: string,
     avatarUrl?: string,
-  ) => { ok: true } | { ok: false; error: string }
-  loginWithGoogle: () => void
+  ) => Promise<{ ok: true } | { ok: false; error: string }>
+  loginWithGoogle: () => Promise<{ ok: true } | { ok: false; error: string }>
   loginWithGoogleProfile: (profile: { name: string; email: string; picture?: string }) => void
-  logout: () => void
+  logout: () => Promise<void>
+  resetPassword: (email: string) => Promise<{ ok: true } | { ok: false; error: string }>
   updateAvatar: (avatarUrl: string) => void
 }
 
-const USERS_KEY = 'biofit_users'
-const SESSION_KEY = 'biofit_session_email'
+const AuthContext = createContext<AuthContextValue | null>(null)
 
-function readUsers(): StoredAccount[] {
-  try {
-    const raw = localStorage.getItem(USERS_KEY)
-    return raw ? (JSON.parse(raw) as StoredAccount[]) : []
-  } catch {
-    return []
+function mapFirebaseUser(firebaseUser: FirebaseUser | null): AuthUser | null {
+  if (!firebaseUser) return null
+
+  return {
+    name: firebaseUser.displayName || firebaseUser.email?.split('@')[0] || 'Usuário',
+    email: firebaseUser.email || '',
+    avatarUrl: firebaseUser.photoURL || undefined,
   }
 }
 
-function writeUsers(users: StoredAccount[]) {
-  localStorage.setItem(USERS_KEY, JSON.stringify(users))
+function getFirebaseErrorMessage(code?: string) {
+  switch (code) {
+    case 'auth/invalid-email':
+      return 'E-mail inválido.'
+    case 'auth/user-disabled':
+      return 'Essa conta foi desativada.'
+    case 'auth/user-not-found':
+      return 'Nenhuma conta encontrada com esse e-mail.'
+    case 'auth/wrong-password':
+      return 'E-mail ou senha incorretos.'
+    case 'auth/email-already-in-use':
+      return 'Já existe uma conta com esse e-mail.'
+    case 'auth/weak-password':
+      return 'A senha deve ter no mínimo 6 caracteres.'
+    case 'auth/popup-closed-by-user':
+      return 'A janela de login foi fechada antes da conclusão.'
+    case 'auth/cancelled-popup-request':
+      return 'A autenticação foi cancelada.'
+    case 'auth/network-request-failed':
+      return 'Falha de conexão. Verifique sua internet.'
+    default:
+      return 'Não foi possível concluir a autenticação. Tente novamente.'
+  }
 }
-
-const AuthContext = createContext<AuthContextValue | null>(null)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null)
 
   useEffect(() => {
-    const email = localStorage.getItem(SESSION_KEY)
-    if (!email) return
-    const account = readUsers().find((u) => u.email === email)
-    if (account) setUser({ name: account.name, email: account.email, avatarUrl: account.avatarUrl })
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      setUser(mapFirebaseUser(firebaseUser))
+    })
+
+    return () => unsubscribe()
   }, [])
 
-  function login(email: string, password: string) {
-    const account = readUsers().find((u) => u.email.toLowerCase() === email.toLowerCase())
-    if (!account || account.password !== password) {
-      return { ok: false as const, error: 'E-mail ou senha incorretos.' }
+  async function login(email: string, password: string) {
+    try {
+      await loginComEmail(email, password)
+      return { ok: true as const }
+    } catch (error: unknown) {
+      const code = (error as { code?: string })?.code
+      return { ok: false as const, error: getFirebaseErrorMessage(code) }
     }
-    localStorage.setItem(SESSION_KEY, account.email)
-    setUser({ name: account.name, email: account.email, avatarUrl: account.avatarUrl })
-    return { ok: true as const }
   }
 
-  function signup(name: string, email: string, password: string, avatarUrl?: string) {
-    const users = readUsers()
-    if (users.some((u) => u.email.toLowerCase() === email.toLowerCase())) {
-      return { ok: false as const, error: 'Já existe uma conta com esse e-mail.' }
+  async function signup(name: string, email: string, password: string, avatarUrl?: string) {
+    try {
+      const result = await cadastrarComEmail(email, password)
+      if (result.user) {
+        await updateProfile(result.user, {
+          displayName: name,
+          photoURL: avatarUrl || undefined,
+        })
+      }
+      return { ok: true as const }
+    } catch (error: unknown) {
+      const code = (error as { code?: string })?.code
+      return { ok: false as const, error: getFirebaseErrorMessage(code) }
     }
-    const account: StoredAccount = { name, email, password, avatarUrl }
-    writeUsers([...users, account])
-    localStorage.setItem(SESSION_KEY, email)
-    setUser({ name, email, avatarUrl })
-    return { ok: true as const }
   }
 
-  function loginWithGoogle() {
-    // Simulação: sem backend não há como trocar o token OAuth real do
-    // Google por dados de perfil. Isto demonstra a experiência esperada
-    // (nome + foto vindos da conta) com dados de exemplo.
-    const demo: StoredAccount = {
-      name: 'Convidado Google',
-      email: 'convidado.google@biofit.app',
-      password: '',
-      avatarUrl: 'https://api.dicebear.com/9.x/notionists/svg?seed=biofit-google',
+  async function loginWithGoogle() {
+    try {
+      await loginComGoogle()
+      return { ok: true as const }
+    } catch (error: unknown) {
+      const code = (error as { code?: string })?.code
+      return { ok: false as const, error: getFirebaseErrorMessage(code) }
     }
-    const users = readUsers()
-    if (!users.some((u) => u.email === demo.email)) writeUsers([...users, demo])
-    localStorage.setItem(SESSION_KEY, demo.email)
-    setUser({ name: demo.name, email: demo.email, avatarUrl: demo.avatarUrl })
   }
 
   function loginWithGoogleProfile(profile: { name: string; email: string; picture?: string }) {
-    // Usado quando o Google Identity Services está configurado de verdade
-    // (ver src/lib/googleAuth.ts) — nome, e-mail e foto vêm da conta
-    // Google real que a pessoa escolheu no seletor de contas.
-    const users = readUsers()
-    const existing = users.find((u) => u.email === profile.email)
-    if (existing) {
-      writeUsers(
-        users.map((u) => (u.email === profile.email ? { ...u, name: profile.name, avatarUrl: profile.picture } : u)),
-      )
-    } else {
-      writeUsers([...users, { name: profile.name, email: profile.email, password: '', avatarUrl: profile.picture }])
-    }
-    localStorage.setItem(SESSION_KEY, profile.email)
-    setUser({ name: profile.name, email: profile.email, avatarUrl: profile.picture })
+    setUser({
+      name: profile.name,
+      email: profile.email,
+      avatarUrl: profile.picture,
+    })
   }
 
-  function logout() {
-    localStorage.removeItem(SESSION_KEY)
+  async function logout() {
+    await deslogar()
     setUser(null)
+  }
+
+  async function resetPassword(email: string) {
+    try {
+      await redefinirSenha(email)
+      return { ok: true as const }
+    } catch (error: unknown) {
+      const code = (error as { code?: string })?.code
+      return { ok: false as const, error: getFirebaseErrorMessage(code) }
+    }
   }
 
   function updateAvatar(avatarUrl: string) {
     if (!user) return
-    const users = readUsers().map((u) => (u.email === user.email ? { ...u, avatarUrl } : u))
-    writeUsers(users)
     setUser({ ...user, avatarUrl })
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, signup, loginWithGoogle, loginWithGoogleProfile, logout, updateAvatar }}>
+    <AuthContext.Provider value={{ user, login, signup, loginWithGoogle, loginWithGoogleProfile, logout, resetPassword, updateAvatar }}>
       {children}
     </AuthContext.Provider>
   )
