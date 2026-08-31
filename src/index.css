@@ -1,0 +1,74 @@
+@import "tailwindcss";
+@import "@fontsource/space-grotesk/500.css";
+@import "@fontsource/space-grotesk/700.css";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/inter/700.css";
+
+/*
+  BIOFIT — Design Tokens
+  Paleta: Bio-Elétrico (verde + preto + branco)
+  Conceito: impulso nervoso / energia muscular. O verde-lima nunca decora —
+  ele sempre significa "ativo, alvo, em execução". Tudo o mais fica em
+  preto/cinza/branco para que o verde carregue 100% do peso semântico.
+*/
+
+@theme {
+  /* Cor */
+  --color-bio-lime: #C6FF3A;      /* alvo / ação / energia — uso restrito */
+  --color-bio-lime-dim: #8FCC1A;  /* variação para hover/pressed */
+  --color-bio-ink: #0A0B0A;       /* preto quase puro, fundo dark */
+  --color-bio-surface: #141614;   /* cards no dark mode */
+  --color-bio-surface-2: #1D201D; /* elevação secundária */
+  --color-bio-line: #2A2E2A;      /* bordas sutis no dark */
+  --color-bio-paper: #FBFCFA;     /* branco quente, fundo light */
+  --color-bio-paper-surface: #F1F3EF;
+  --color-bio-paper-line: #E1E5DE;
+  --color-bio-ink-soft: #A7ADA6;  /* texto secundário sobre dark */
+  --color-bio-graphite: #6B706A;  /* texto secundário sobre light */
+  --color-bio-synergist: #4C6B3A; /* músculo sinergista — verde apagado, nunca compete com o alvo */
+  --color-bio-danger: #FF5A4E;    /* erros comuns / alertas de lesão */
+
+  /* Tipografia */
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* Raio — anguloso no display, macio no corpo: técnico mas humano */
+  --radius-bio-sm: 10px;
+  --radius-bio-md: 16px;
+  --radius-bio-lg: 24px;
+  --radius-bio-pill: 999px;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-bio-ink);
+  color: var(--color-bio-paper);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+}
+
+* {
+  scrollbar-width: none;
+}
+*::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-bio-lime);
+  outline-offset: 2px;
+}
