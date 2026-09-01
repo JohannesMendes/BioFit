@@ -20,14 +20,26 @@ export function ExerciseList() {
   const [env, setEnv] = useState<Environment | 'todos'>('todos')
   const [query, setQuery] = useState('')
 
+  // nome do grupo muscular (ex.: "peito") -> lista de ids que ele cobre,
+  // pra buscar "peito" e achar exercícios com muscleGroups: ['peito', ...]
+  const groupNameById = useMemo(
+    () => Object.fromEntries(muscleGroups.map((g) => [g.id, g.name.toLowerCase()])),
+    []
+  )
+
   const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase()
     return exercises.filter((ex) => {
       if (grupoId && !ex.muscleGroups.includes(grupoId as never)) return false
       if (env !== 'todos' && !ex.environment.includes(env)) return false
-      if (query && !ex.name.toLowerCase().includes(query.toLowerCase())) return false
+      if (q) {
+        const nameMatch = ex.name.toLowerCase().includes(q)
+        const muscleMatch = ex.muscleGroups.some((id) => (groupNameById[id] ?? id).includes(q))
+        if (!nameMatch && !muscleMatch) return false
+      }
       return true
     })
-  }, [exercises, grupoId, env, query])
+  }, [exercises, grupoId, env, query, groupNameById])
 
   return (
     <div className="flex min-h-full flex-col">

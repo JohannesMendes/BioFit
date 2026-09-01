@@ -1,7 +1,8 @@
 import type { Exercise } from '@/types'
 import { generatedExercises } from '@/data/generatedExercises'
+import { curatedMediaOverrides } from '@/data/curatedMediaOverrides'
 
-export const exercises: Exercise[] = [
+const curatedExercises: Exercise[] = [
   {
     id: 'supino-reto-barra',
     name: 'Supino Reto com Barra',
@@ -1281,10 +1282,25 @@ export const exercises: Exercise[] = [
       substitutos: ['mobilidade-quadril-90-90', 'gato-camelo'],
     },
   },
-  // Os 46 exercícios acima são a biblioteca curada manualmente (textos
-  // autorais, com mais profundidade explicativa). A partir daqui entram
-  // os exercícios importados (ver src/data/generatedExercises.ts) — é o
-  // que dá a cobertura completa de grupo muscular + equipamento, todos
-  // com foto real.
-  ...generatedExercises,
 ]
+
+/**
+ * Aplica as fotos reais encontradas para parte da lista curada acima
+ * (ver curatedMediaOverrides.ts) e junta com os exercícios importados.
+ * Os 31 exercícios curados sem correspondência confiável continuam
+ * usando o card com gradiente + ícone (fallback elegante, nunca imagem
+ * quebrada) até termos uma foto real pra eles também.
+ */
+const curatedWithRealMedia: Exercise[] = curatedExercises.map((ex) => {
+  const override = curatedMediaOverrides[ex.id]
+  if (!override) return ex
+  return {
+    ...ex,
+    thumbnail: override.photoStart,
+    media: { photoStart: override.photoStart, photoEnd: override.photoEnd },
+  }
+})
+
+// A biblioteca curada (com texto autoral) vem primeiro; os exercícios
+// importados completam a cobertura de grupo muscular + equipamento.
+export const exercises: Exercise[] = [...curatedWithRealMedia, ...generatedExercises]

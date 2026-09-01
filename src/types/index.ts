@@ -43,6 +43,25 @@ export interface MuscleHighlight {
   role: 'alvo' | 'sinergista'
 }
 
+export interface WorkoutPlanItem {
+  id: string
+  exerciseId: string
+  series: number
+  repsMin: number
+  repsMax: number
+  carga?: string
+  observacoes?: string
+}
+
+export interface WorkoutPlan {
+  id: string
+  /** Letra/identificador curto da ficha, ex.: "A", "B", "C" */
+  letra: string
+  /** Nome/foco muscular, ex.: "Peito e Tríceps" */
+  nome: string
+  itens: WorkoutPlanItem[]
+  criadoEm: string
+}
 export interface Exercise {
   id: string
   name: string

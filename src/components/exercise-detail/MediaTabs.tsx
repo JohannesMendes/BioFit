@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { SmartMedia } from '@/components/media/MediaPlaceholder'
+import { AnimatedFramesMedia } from '@/components/media/AnimatedFramesMedia'
 import { MuscleMap } from '@/components/exercise-detail/MuscleMap'
 import type { Exercise } from '@/types'
 
@@ -10,11 +11,11 @@ export function MediaTabs({ exercise }: { exercise: Exercise }) {
     <div>
       <div className="flex items-center gap-3 px-4 py-3">
         <div className="h-12 w-12 shrink-0 overflow-hidden rounded-bio-sm">
-          <SmartMedia
-            src={exercise.thumbnail}
+          <AnimatedFramesMedia
+            frameA={exercise.media.photoStart}
+            frameB={exercise.media.photoEnd}
             alt={exercise.name}
-            placeholderLabel="GIF"
-            kind="photo"
+            placeholderLabel={exercise.name}
             className="h-full w-full"
           />
         </div>
@@ -40,11 +41,11 @@ export function MediaTabs({ exercise }: { exercise: Exercise }) {
       </div>
 
       {tab === 'video' ? (
-        <SmartMedia
-          src={exercise.videoLoop ?? exercise.thumbnail}
+        <AnimatedFramesMedia
+          frameA={exercise.media.photoStart}
+          frameB={exercise.media.photoEnd}
           alt={`Demonstração: ${exercise.name}`}
-          placeholderLabel={`Demonstração em loop · ${exercise.name} · opção slow-motion`}
-          kind="video"
+          placeholderLabel={exercise.name}
           className="h-64 w-full"
         />
       ) : (

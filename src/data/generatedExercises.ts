@@ -8,6 +8,9 @@ import type { Exercise } from '@/types'
  * - equipamento mapeado para o nosso enum (Barra, Halter, Polia,
  *   Máquina, Peso Corporal, Kettlebell, Elástico)
  * - todos com pelo menos 1 foto real (nunca ficam sem mídia)
+ * - sem duplicatas: os que já existem na lista curada abaixo foram
+ *   removidos daqui (a versão curada, com texto autoral, prevalece —
+ *   veja curatedMediaOverrides.ts para a foto real dela)
  *
  * Gerado por script (transform_exercises.py) a partir de:
  * https://github.com/joao-gugel/exercicios-bd-ptbr (dados + instruções)
@@ -1159,46 +1162,6 @@ export const generatedExercises: Exercise[] = [
     }
   },
   {
-    "id": "fdb-barbell-curl",
-    "name": "Rosca Direta com Barra",
-    "muscleGroups": [
-      "biceps"
-    ],
-    "equipment": "Barra",
-    "environment": [
-      "academia"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Curl/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "biceps",
-        "role": "alvo"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Curl/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Curl/1.jpg"
-    },
-    "explanation": {
-      "simples": "Fique em pé com o tronco ereto, segurando uma barra com pegada na largura dos ombros. As palmas devem estar voltadas para frente e os cotovelos próximos ao corpo. Esta será sua posição inicial. Mantendo os braços superiores parados, curve os pesos para frente contraindo o bíceps .",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: biceps.",
-        "vetorForca": "A força ocorre na flexão do cotovelo, com o antebraço se aproximando do braço — mantenha o cotovelo fixo ao lado do corpo.",
-        "amplitude": "Siga a execução completa: Fique em pé com o tronco ereto, segurando uma barra com pegada na largura dos ombros. As palmas devem estar voltadas para frente e os cotovelos próximos ao corpo. Esta será sua posição inicial. → Mantendo os braços superiores parados, curve os pesos para frente contraindo o bíceps enquanto expira. Apenas os antebraços devem se mover. → Continue até o bíceps estar totalmente contraído e a barra na altura dos ombros. Segure a contração por um segundo e aperte o bíceps. → Volte lentamente à posição inicial enquanto inspira. → Repita pelo número recomendado de repetições."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Barra"
-      ],
-      "errosComuns": [
-        "Evite balançar o tronco para \"ajudar\" a subir o peso — isso tira a tensão do bíceps."
-      ],
-      "substitutos": []
-    }
-  },
-  {
     "id": "fdb-barbell-curls-lying-against-an-incline",
     "name": "Rosca com Barra no Banco Inclinado",
     "muscleGroups": [
@@ -1309,66 +1272,6 @@ export const generatedExercises: Exercise[] = [
       ],
       "errosComuns": [
         "Evite arredondar excessivamente a coluna sob carga."
-      ],
-      "substitutos": []
-    }
-  },
-  {
-    "id": "fdb-barbell-full-squat",
-    "name": "Agachamento Livre com Barra",
-    "muscleGroups": [
-      "quadriceps",
-      "panturrilha",
-      "gluteos",
-      "posterior",
-      "lombar"
-    ],
-    "equipment": "Barra",
-    "environment": [
-      "academia"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Full_Squat/0.jpg",
-    "difficulty": "intermediário",
-    "muscleHighlights": [
-      {
-        "pathId": "quadriceps",
-        "role": "alvo"
-      },
-      {
-        "pathId": "gastrocnemio",
-        "role": "sinergista"
-      },
-      {
-        "pathId": "gluteo-maximo",
-        "role": "sinergista"
-      },
-      {
-        "pathId": "isquiotibiais",
-        "role": "sinergista"
-      },
-      {
-        "pathId": "eretores-espinha",
-        "role": "sinergista"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Full_Squat/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Full_Squat/1.jpg"
-    },
-    "explanation": {
-      "simples": "Posicione a barra em um rack logo acima da altura dos ombros. Coloque-se sob a barra, apoiando-a nas costas dos ombros (logo abaixo do pescoço). Segure a barra com as duas mãos e levante-a do rack empurrando com as pernas e endireitando o tronco.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: quadriceps. Músculos secundários: panturrilha, gluteos, posterior, lombar.",
-        "vetorForca": "A força é aplicada na extensão do joelho e/ou quadril — mantenha o joelho alinhado com a ponta do pé.",
-        "amplitude": "Siga a execução completa: Posicione a barra em um rack logo acima da altura dos ombros. Coloque-se sob a barra, apoiando-a nas costas dos ombros (logo abaixo do pescoço). → Segure a barra com as duas mãos e levante-a do rack empurrando com as pernas e endireitando o tronco. → Afaste-se do rack e posicione as pernas na largura dos ombros, com os pés levemente apontados para fora. Mantenha a cabeça erguida e as costas retas. Esta será sua posição inicial. → Comece a descer lentamente, dobrando os joelhos e sentando com os quadris, mantendo a postura reta. Desça até que os isquiotibiais toquem as panturrilhas, inspirando. → Levante a barra expirando, empurrando o chão com os calcanhares e estendendo as pernas e quadris para voltar à posição inicial. → Repita pelo número recomendado de repetições."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Barra"
-      ],
-      "errosComuns": [
-        "Evite deixar o joelho ultrapassar demais a ponta do pé ou colapsar para dentro."
       ],
       "substitutos": []
     }
@@ -1774,56 +1677,6 @@ export const generatedExercises: Exercise[] = [
       ],
       "errosComuns": [
         "Evite \"quicar\" no fundo do movimento, perdendo o controle e a tensão muscular."
-      ],
-      "substitutos": []
-    }
-  },
-  {
-    "id": "fdb-barbell-shoulder-press",
-    "name": "Desenvolvimento Militar com Barra",
-    "muscleGroups": [
-      "ombros",
-      "peito",
-      "triceps"
-    ],
-    "equipment": "Barra",
-    "environment": [
-      "academia"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Shoulder_Press/0.jpg",
-    "difficulty": "intermediário",
-    "muscleHighlights": [
-      {
-        "pathId": "deltoide-anterior",
-        "role": "alvo"
-      },
-      {
-        "pathId": "peitoral-maior",
-        "role": "sinergista"
-      },
-      {
-        "pathId": "triceps",
-        "role": "sinergista"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Shoulder_Press/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Shoulder_Press/1.jpg"
-    },
-    "explanation": {
-      "simples": "Sente-se em um banco com apoio dorsal em um rack de agachamento. Posicione a barra logo acima da cabeça. Segure a barra com pegada pronada (palmas para frente). Após pegar a barra, levante-a acima da cabeça travando os braços. Segure na altura dos ombros e ligeiramente à frente d.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: ombros. Músculos secundários: peito, triceps.",
-        "vetorForca": "A força é aplicada em elevação ou rotação do braço a partir da articulação do ombro — priorize amplitude controlada sobre carga excessiva.",
-        "amplitude": "Siga a execução completa: Sente-se em um banco com apoio dorsal em um rack de agachamento. Posicione a barra logo acima da cabeça. Segure a barra com pegada pronada (palmas para frente). → Após pegar a barra, levante-a acima da cabeça travando os braços. Segure na altura dos ombros e ligeiramente à frente da cabeça. Esta é a posição inicial. → Abaixe a barra lentamente até os ombros inspirando. → Levante a barra de volta à posição inicial expirando. → Repita pelo número recomendado de repetições."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Barra"
-      ],
-      "errosComuns": [
-        "Evite elevar os ombros junto com o movimento (encolhendo o trapézio) em vez de isolar o deltoide."
       ],
       "substitutos": []
     }
@@ -2498,56 +2351,6 @@ export const generatedExercises: Exercise[] = [
       ],
       "errosComuns": [
         "Evite puxar o pescoço com as mãos em vez de usar o abdômen para iniciar o movimento."
-      ],
-      "substitutos": []
-    }
-  },
-  {
-    "id": "fdb-bent-over-barbell-row",
-    "name": "Remada Curvada com Barra",
-    "muscleGroups": [
-      "costas",
-      "biceps",
-      "ombros"
-    ],
-    "equipment": "Barra",
-    "environment": [
-      "academia"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bent_Over_Barbell_Row/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "grande-dorsal",
-        "role": "alvo"
-      },
-      {
-        "pathId": "biceps",
-        "role": "sinergista"
-      },
-      {
-        "pathId": "deltoide-anterior",
-        "role": "sinergista"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bent_Over_Barbell_Row/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bent_Over_Barbell_Row/1.jpg"
-    },
-    "explanation": {
-      "simples": "Segure uma barra com pegada pronada (palmas para baixo), flexione levemente os joelhos e incline o tronco para a frente, mantendo as costas retas até ficar quase paralelo ao chão. Dica: Mantenha a cabeça erguida. A barra deve ficar pendurada à sua frente, com os braços perpendicu.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: costas. Músculos secundários: biceps, ombros.",
-        "vetorForca": "O movimento costuma puxar a carga em direção ao tronco — inicie puxando com as escápulas antes de flexionar o cotovelo.",
-        "amplitude": "Siga a execução completa: Segure uma barra com pegada pronada (palmas para baixo), flexione levemente os joelhos e incline o tronco para a frente, mantendo as costas retas até ficar quase paralelo ao chão. Dica: Mantenha a cabeça erguida. A barra deve ficar pendurada à sua frente, com os braços perpendiculares ao chão. Esta é a posição inicial. → Mantendo o tronco parado, expire e puxe a barra em sua direção. Mantenha os cotovelos próximos ao corpo e use apenas os antebraços para segurar o peso. No topo, contraia as costas e segure brevemente. → Inspire e abaixe a barra lentamente à posição inicial. → Repita para a quantidade recomendada de repetições."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Barra"
-      ],
-      "errosComuns": [
-        "Evite usar embalo do corpo (cheating) para compensar a falta de força nos braços."
       ],
       "substitutos": []
     }
@@ -6914,47 +6717,6 @@ export const generatedExercises: Exercise[] = [
     }
   },
   {
-    "id": "fdb-dumbbell-alternate-bicep-curl",
-    "name": "Rosca Alternada com Halteres",
-    "muscleGroups": [
-      "biceps"
-    ],
-    "equipment": "Halter",
-    "environment": [
-      "academia",
-      "casa"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Alternate_Bicep_Curl/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "biceps",
-        "role": "alvo"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Alternate_Bicep_Curl/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Alternate_Bicep_Curl/1.jpg"
-    },
-    "explanation": {
-      "simples": "Fique em pé (tronco ereto) com um halter em cada mão, mantendo os braços estendidos ao lado do corpo. Os cotovelos devem ficar próximos ao tronco e as palmas das mãos voltadas para as coxas. Mantendo a parte superior dos braços parada, faça a rosca com o peso direito enquanto gir.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: biceps.",
-        "vetorForca": "A força ocorre na flexão do cotovelo, com o antebraço se aproximando do braço — mantenha o cotovelo fixo ao lado do corpo.",
-        "amplitude": "Siga a execução completa: Fique em pé (tronco ereto) com um halter em cada mão, mantendo os braços estendidos ao lado do corpo. Os cotovelos devem ficar próximos ao tronco e as palmas das mãos voltadas para as coxas. → Mantendo a parte superior dos braços parada, faça a rosca com o peso direito enquanto gira a palma da mão até ficar voltada para frente. Continue contraindo o bíceps até que ele esteja totalmente contraído e o halter esteja na altura do ombro. Segure a posição contraída por um segundo, apertando o bíceps. Dica: Apenas os antebraços devem se mover. → Volte lentamente o halter à posição inicial enquanto inspira. Dica: Lembre-se de girar as palmas de volta à posição inicial (voltadas para as coxas) ao descer. → Repita o movimento com a mão esquerda. Isso equivale a uma repetição. → Continue alternando dessa maneira pelo número recomendado de repetições."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Halter"
-      ],
-      "errosComuns": [
-        "Evite balançar o tronco para \"ajudar\" a subir o peso — isso tira a tensão do bíceps."
-      ],
-      "substitutos": []
-    }
-  },
-  {
     "id": "fdb-dumbbell-bench-press",
     "name": "Supino com Halteres",
     "muscleGroups": [
@@ -7709,52 +7471,6 @@ export const generatedExercises: Exercise[] = [
       ],
       "errosComuns": [
         "Evite balançar o tronco para \"ajudar\" a subir o peso — isso tira a tensão do bíceps."
-      ],
-      "substitutos": []
-    }
-  },
-  {
-    "id": "fdb-dumbbell-raise",
-    "name": "Elevação Lateral com Halteres",
-    "muscleGroups": [
-      "ombros",
-      "biceps"
-    ],
-    "equipment": "Halter",
-    "environment": [
-      "academia",
-      "casa"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Raise/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "deltoide-anterior",
-        "role": "alvo"
-      },
-      {
-        "pathId": "biceps",
-        "role": "sinergista"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Raise/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Raise/1.jpg"
-    },
-    "explanation": {
-      "simples": "Segure um halter em cada mão e fique em pé com os braços estendidos ao lado do corpo, cotovelos levemente flexionados e costas retas. Os halteres devem ficar próximos às coxas, com as palmas das mãos voltadas para trás. Expire e use os ombros para levantar os halteres para os lad.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: ombros. Músculos secundários: biceps.",
-        "vetorForca": "A força é aplicada em elevação ou rotação do braço a partir da articulação do ombro — priorize amplitude controlada sobre carga excessiva.",
-        "amplitude": "Siga a execução completa: Segure um halter em cada mão e fique em pé com os braços estendidos ao lado do corpo, cotovelos levemente flexionados e costas retas. Os halteres devem ficar próximos às coxas, com as palmas das mãos voltadas para trás. → Expire e use os ombros para levantar os halteres para os lados, até eles ficarem próximos ao queixo, com os cotovelos conduzindo o movimento. Pause por um segundo no topo. → Inspire e abaixe os halteres lentamente até a posição inicial. → Repita para a quantidade recomendada de repetições."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Halter"
-      ],
-      "errosComuns": [
-        "Evite elevar os ombros junto com o movimento (encolhendo o trapézio) em vez de isolar o deltoide."
       ],
       "substitutos": []
     }
@@ -9184,47 +8900,6 @@ export const generatedExercises: Exercise[] = [
     }
   },
   {
-    "id": "fdb-front-dumbbell-raise",
-    "name": "Elevação Frontal com Halteres",
-    "muscleGroups": [
-      "ombros"
-    ],
-    "equipment": "Halter",
-    "environment": [
-      "academia",
-      "casa"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Front_Dumbbell_Raise/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "deltoide-anterior",
-        "role": "alvo"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Front_Dumbbell_Raise/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Front_Dumbbell_Raise/1.jpg"
-    },
-    "explanation": {
-      "simples": "Segure um halter em cada mão, fique em pé com o tronco reto e os halteres na frente das coxas, braços estendidos, palmas voltadas para as coxas. Esta é a posição inicial. Mantendo o tronco imóvel, levante o halter esquerdo para a frente com o cotovelo levemente flexionado e palma.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: ombros.",
-        "vetorForca": "A força é aplicada em elevação ou rotação do braço a partir da articulação do ombro — priorize amplitude controlada sobre carga excessiva.",
-        "amplitude": "Siga a execução completa: Segure um halter em cada mão, fique em pé com o tronco reto e os halteres na frente das coxas, braços estendidos, palmas voltadas para as coxas. Esta é a posição inicial. → Mantendo o tronco imóvel, levante o halter esquerdo para a frente com o cotovelo levemente flexionado e palmas para baixo, até o braço ficar ligeiramente acima do paralelo. Expire e pause no topo. → Abaixe o halter esquerdo lentamente enquanto levanta o direito, alternando os movimentos. → Continue alternando até completar as repetições recomendadas para cada braço."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Halter"
-      ],
-      "errosComuns": [
-        "Evite elevar os ombros junto com o movimento (encolhendo o trapézio) em vez de isolar o deltoide."
-      ],
-      "substitutos": []
-    }
-  },
-  {
     "id": "fdb-front-incline-dumbbell-raise",
     "name": "Elevação Frontal com Halteres no Banco Inclinado",
     "muscleGroups": [
@@ -10582,57 +10257,6 @@ export const generatedExercises: Exercise[] = [
         "articulacoes": "Músculo alvo: peito. Músculos secundários: ombros.",
         "vetorForca": "De forma geral, a força é aplicada perpendicular ao tronco, empurrando a carga para longe do peito — controle a descida para maximizar o trabalho muscular.",
         "amplitude": "Siga a execução completa: Segure um haltere em cada mão e deite-se em um banco inclinado com ângulo máximo de 30 graus. → Estenda os braços acima de você com uma leve flexão nos cotovelos. → Gire os punhos até as palmas das mãos ficarem voltadas para você, com os dedos mindinhos próximos um do outro. Esta é a posição inicial. → Inspire e abaixe os braços lateralmente, mantendo-os estendidos e girando os punhos até as palmas se enfrentarem. Ao final, os braços estarão ao lado do corpo com as palmas para cima. → Expire e retorne os halteres à posição inicial, revertendo o movimento e girando as mãos para os mindinhos ficarem próximos novamente. O movimento ocorre apenas nas articulações do ombro e do punho, sem mexer os cotovelos. → Repita para a quantidade recomendada de repetições."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Halter"
-      ],
-      "errosComuns": [
-        "Evite arquear demais a lombar ou deixar os ombros subirem em direção às orelhas durante o movimento."
-      ],
-      "substitutos": []
-    }
-  },
-  {
-    "id": "fdb-incline-dumbbell-press",
-    "name": "Supino Inclinado com Halteres",
-    "muscleGroups": [
-      "peito",
-      "ombros",
-      "triceps"
-    ],
-    "equipment": "Halter",
-    "environment": [
-      "academia",
-      "casa"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Incline_Dumbbell_Press/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "peitoral-maior",
-        "role": "alvo"
-      },
-      {
-        "pathId": "deltoide-anterior",
-        "role": "sinergista"
-      },
-      {
-        "pathId": "triceps",
-        "role": "sinergista"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Incline_Dumbbell_Press/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Incline_Dumbbell_Press/1.jpg"
-    },
-    "explanation": {
-      "simples": "Deite-se em um banco inclinado com um haltere em cada mão apoiado sobre as coxas, palmas voltadas uma para a outra. Use as coxas para ajudar a levantar os halteres um de cada vez até a altura dos ombros, com as mãos na largura dos ombros.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: peito. Músculos secundários: ombros, triceps.",
-        "vetorForca": "De forma geral, a força é aplicada perpendicular ao tronco, empurrando a carga para longe do peito — controle a descida para maximizar o trabalho muscular.",
-        "amplitude": "Siga a execução completa: Deite-se em um banco inclinado com um haltere em cada mão apoiado sobre as coxas, palmas voltadas uma para a outra. → Use as coxas para ajudar a levantar os halteres um de cada vez até a altura dos ombros, com as mãos na largura dos ombros. → Gire os punhos para frente até as palmas ficarem voltadas para longe de você. Esta é a posição inicial. Mantenha o controle dos halteres. → Expire e empurre os halteres para cima usando o peito. → Estenda os braços completamente no topo, segure por um segundo e abaixe os pesos lentamente (o abaixamento deve durar o dobro do tempo da subida). → Repita para a quantidade recomendada de repetições. → Ao terminar, apoie os halteres nas coxas e depois no chão para soltá-los com segurança."
       }
     },
     "fichaTecnica": {
@@ -13803,46 +13427,6 @@ export const generatedExercises: Exercise[] = [
     }
   },
   {
-    "id": "fdb-lying-leg-curls",
-    "name": "Cadeira Flexora",
-    "muscleGroups": [
-      "posterior"
-    ],
-    "equipment": "Máquina",
-    "environment": [
-      "academia"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Lying_Leg_Curls/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "isquiotibiais",
-        "role": "alvo"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Lying_Leg_Curls/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Lying_Leg_Curls/1.jpg"
-    },
-    "explanation": {
-      "simples": "Ajuste a alavanca da máquina para sua altura e deite-se de bruços na cadeira flexora, com a almofada na parte de trás das pernas (alguns centímetros abaixo das panturrilhas). Dica: Prefira máquinas anguladas, pois são melhores para recrutar os isquiotibiais. Mantendo o torso plan.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: posterior.",
-        "vetorForca": "O movimento trabalha a flexão do joelho e/ou extensão do quadril — priorize controle na fase excêntrica (alongamento).",
-        "amplitude": "Siga a execução completa: Ajuste a alavanca da máquina para sua altura e deite-se de bruços na cadeira flexora, com a almofada na parte de trás das pernas (alguns centímetros abaixo das panturrilhas). Dica: Prefira máquinas anguladas, pois são melhores para recrutar os isquiotibiais. → Mantendo o torso plano no banco, certifique-se de que as pernas estejam totalmente estendidas e segure as alças laterais da máquina. Posicione os pés retos (ou use outras variações de posicionamento). Esta será sua posição inicial. → Ao expirar, flexione as pernas o máximo possível sem levantar as coxas do banco. Ao atingir a posição totalmente contraída, segure por um segundo. → Ao inspirar, retorne as pernas à posição inicial. Repita pelo número recomendado de repetições."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Máquina"
-      ],
-      "errosComuns": [
-        "Evite hiperextender a lombar para compensar a falta de mobilidade de quadril."
-      ],
-      "substitutos": []
-    }
-  },
-  {
     "id": "fdb-lying-machine-squat",
     "name": "Agachamento na Máquina Deitado",
     "muscleGroups": [
@@ -16717,67 +16301,6 @@ export const generatedExercises: Exercise[] = [
     }
   },
   {
-    "id": "fdb-plie-dumbbell-squat",
-    "name": "Agachamento Sumô com Halter",
-    "muscleGroups": [
-      "quadriceps",
-      "abdomen",
-      "panturrilha",
-      "gluteos",
-      "posterior"
-    ],
-    "equipment": "Halter",
-    "environment": [
-      "academia",
-      "casa"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Plie_Dumbbell_Squat/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "quadriceps",
-        "role": "alvo"
-      },
-      {
-        "pathId": "reto-abdominal",
-        "role": "sinergista"
-      },
-      {
-        "pathId": "gastrocnemio",
-        "role": "sinergista"
-      },
-      {
-        "pathId": "gluteo-maximo",
-        "role": "sinergista"
-      },
-      {
-        "pathId": "isquiotibiais",
-        "role": "sinergista"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Plie_Dumbbell_Squat/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Plie_Dumbbell_Squat/1.jpg"
-    },
-    "explanation": {
-      "simples": "Segure um halter pela base com as duas mãos e fique em pé com as pernas afastadas além da largura dos ombros e joelhos levemente flexionados. Os pés devem estar apontados para fora. Dica: os braços devem ficar imóveis durante o exercício. Esta é a posição inicial.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: quadriceps. Músculos secundários: abdomen, panturrilha, gluteos, posterior.",
-        "vetorForca": "A força é aplicada na extensão do joelho e/ou quadril — mantenha o joelho alinhado com a ponta do pé.",
-        "amplitude": "Siga a execução completa: Segure um halter pela base com as duas mãos e fique em pé com as pernas afastadas além da largura dos ombros e joelhos levemente flexionados. → Os pés devem estar apontados para fora. Dica: os braços devem ficar imóveis durante o exercício. Esta é a posição inicial. → Flexione os joelhos lentamente e abaixe-se até que as coxas fiquem paralelas ao chão. Inspire durante essa fase excêntrica. → Empurre principalmente com os calcanhares para voltar à posição inicial enquanto expira. → Repita pelo número recomendado de repetições."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Halter"
-      ],
-      "errosComuns": [
-        "Evite deixar o joelho ultrapassar demais a ponta do pé ou colapsar para dentro."
-      ],
-      "substitutos": []
-    }
-  },
-  {
     "id": "fdb-plyo-kettlebell-pushups",
     "name": "Flexões Plyométricas com Kettlebell",
     "muscleGroups": [
@@ -18056,61 +17579,6 @@ export const generatedExercises: Exercise[] = [
       ],
       "errosComuns": [
         "Evite \"quicar\" no fundo do movimento, perdendo o controle e a tensão muscular."
-      ],
-      "substitutos": []
-    }
-  },
-  {
-    "id": "fdb-romanian-deadlift",
-    "name": "Levantamento Terra Romeno",
-    "muscleGroups": [
-      "posterior",
-      "panturrilha",
-      "gluteos",
-      "lombar"
-    ],
-    "equipment": "Barra",
-    "environment": [
-      "academia"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Romanian_Deadlift/0.jpg",
-    "difficulty": "intermediário",
-    "muscleHighlights": [
-      {
-        "pathId": "isquiotibiais",
-        "role": "alvo"
-      },
-      {
-        "pathId": "gastrocnemio",
-        "role": "sinergista"
-      },
-      {
-        "pathId": "gluteo-maximo",
-        "role": "sinergista"
-      },
-      {
-        "pathId": "eretores-espinha",
-        "role": "sinergista"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Romanian_Deadlift/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Romanian_Deadlift/1.jpg"
-    },
-    "explanation": {
-      "simples": "Segure uma barra com as palmas voltadas para baixo e as mãos um pouco além da largura dos ombros. Flexione levemente os joelhos, mantenha as canelas verticais, os quadris para trás e as costas retas. Esta é a posição inicial.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: posterior. Músculos secundários: panturrilha, gluteos, lombar.",
-        "vetorForca": "O movimento trabalha a flexão do joelho e/ou extensão do quadril — priorize controle na fase excêntrica (alongamento).",
-        "amplitude": "Siga a execução completa: Segure uma barra com as palmas voltadas para baixo e as mãos um pouco além da largura dos ombros. → Flexione levemente os joelhos, mantenha as canelas verticais, os quadris para trás e as costas retas. Esta é a posição inicial. → Mantendo as costas e braços retos, use os quadris para levantar a barra ao expirar, em um movimento controlado. → Ao ficar em pé completamente, abaixe a barra empurrando os quadris para trás, flexionando os joelhos minimamente. → Repita para a quantidade recomendada de repetições."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Barra"
-      ],
-      "errosComuns": [
-        "Evite hiperextender a lombar para compensar a falta de mobilidade de quadril."
       ],
       "substitutos": []
     }
@@ -19428,52 +18896,6 @@ export const generatedExercises: Exercise[] = [
       ],
       "errosComuns": [
         "Evite elevar os ombros junto com o movimento (encolhendo o trapézio) em vez de isolar o deltoide."
-      ],
-      "substitutos": []
-    }
-  },
-  {
-    "id": "fdb-side-bridge",
-    "name": "Prancha Lateral",
-    "muscleGroups": [
-      "abdomen",
-      "ombros"
-    ],
-    "equipment": "Peso Corporal",
-    "environment": [
-      "academia",
-      "casa"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Side_Bridge/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "reto-abdominal",
-        "role": "alvo"
-      },
-      {
-        "pathId": "deltoide-anterior",
-        "role": "sinergista"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Side_Bridge/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Side_Bridge/1.jpg"
-    },
-    "explanation": {
-      "simples": "Exercício de abdomen com peso corporal.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: abdomen. Músculos secundários: ombros.",
-        "vetorForca": "A força atua na flexão do tronco ou estabilização da coluna — priorize contração consciente em vez de velocidade.",
-        "amplitude": "Instruções detalhadas de amplitude não disponíveis para este exercício."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Peso Corporal"
-      ],
-      "errosComuns": [
-        "Evite puxar o pescoço com as mãos em vez de usar o abdômen para iniciar o movimento."
       ],
       "substitutos": []
     }
@@ -21220,7 +20642,7 @@ export const generatedExercises: Exercise[] = [
   },
   {
     "id": "fdb-split-squat-with-dumbbells",
-    "name": "Afundo com Halteres",
+    "name": "Afundo Estático com Halteres",
     "muscleGroups": [
       "quadriceps",
       "gluteos",

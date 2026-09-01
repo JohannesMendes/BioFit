@@ -1,10 +1,10 @@
-import { Home, Dumbbell, BookOpen, User } from 'lucide-react'
+import { Home, Dumbbell, ClipboardList, User } from 'lucide-react'
 import { NavLink } from 'react-router-dom'
 
 const items = [
   { to: '/', label: 'Início', icon: Home },
   { to: '/exercicios', label: 'Exercícios', icon: Dumbbell },
-  { to: '/aprender', label: 'Aprender', icon: BookOpen },
+  { to: '/treinos', label: 'Meus Treinos', icon: ClipboardList },
   { to: '/perfil', label: 'Perfil', icon: User },
 ]
 

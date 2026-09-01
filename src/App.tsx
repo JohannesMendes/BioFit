@@ -4,7 +4,8 @@ import { AuthProvider } from '@/context/AuthContext'
 import { Home } from '@/pages/Home'
 import { ExerciseList } from '@/pages/ExerciseList'
 import { ExerciseDetail } from '@/pages/ExerciseDetail'
-import { Learn } from '@/pages/Learn'
+import { Treinos } from '@/pages/Treinos'
+import { TreinoDetail } from '@/pages/TreinoDetail'
 import { Profile } from '@/pages/Profile'
 import { Login } from '@/pages/auth/Login'
 import { Signup } from '@/pages/auth/Signup'
@@ -19,7 +20,8 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/exercicios" element={<ExerciseList />} />
             <Route path="/exercicios/:id" element={<ExerciseDetail />} />
-            <Route path="/aprender" element={<Learn />} />
+            <Route path="/treinos" element={<Treinos />} />
+            <Route path="/treinos/:id" element={<TreinoDetail />} />
             <Route path="/perfil" element={<Profile />} />
             <Route path="/login" element={<Login />} />
             <Route path="/cadastro" element={<Signup />} />
