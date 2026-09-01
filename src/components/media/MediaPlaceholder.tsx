@@ -36,7 +36,9 @@ export function SmartMedia({
 }) {
   const [failed, setFailed] = useState(false)
 
-  if (src && /^https?:\/\//.test(src) && !failed) {
+  const isRealMedia = !!src && !failed && (/^https?:\/\//.test(src) || src.startsWith('/') || src.startsWith('data:'))
+
+  if (isRealMedia) {
     return (
       <div className={`relative overflow-hidden bg-bio-paper-surface ${className}`}>
         <img

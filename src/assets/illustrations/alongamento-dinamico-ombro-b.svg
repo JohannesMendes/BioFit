@@ -1,0 +1,13 @@
+<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="300" height="300" fill="#141614"/>
+  <line x1="60" y1="240" x2="240" y2="240" stroke="#2A2E2A" stroke-width="2"/>
+  <g fill="none" stroke="#C6FF3A" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="150" cy="70" r="16" fill="#C6FF3A" stroke="none"/>
+    <path d="M150 86 L150 165" />
+    <path d="M150 165 L120 240" />
+    <path d="M150 165 L180 240" />
+    <path d="M150 105 L100 75" />
+    <path d="M150 105 L200 75" />
+  </g>
+  <text x="150" y="270" text-anchor="middle" fill="#A7ADA6" font-family="Inter, sans-serif" font-size="13">Círculo amplo: braços sobem até o alto</text>
+</svg>

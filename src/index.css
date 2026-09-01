@@ -27,7 +27,8 @@
   --color-bio-paper-line: #E1E5DE;
   --color-bio-ink-soft: #A7ADA6;  /* texto secundário sobre dark */
   --color-bio-graphite: #6B706A;  /* texto secundário sobre light */
-  --color-bio-synergist: #4C6B3A; /* músculo sinergista — verde apagado, nunca compete com o alvo */
+  --color-bio-synergist: #5FBFAE; /* músculo sinergista — verde-água, bem distinto do alvo E do corpo */
+  --color-bio-muscle-body: #3A413C; /* silhueta do boneco anatômico — mais clara que o fundo pra não sumir */
   --color-bio-danger: #FF5A4E;    /* erros comuns / alertas de lesão */
 
   /* Tipografia */

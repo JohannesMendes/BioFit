@@ -1,6 +1,7 @@
 import type { Exercise } from '@/types'
 import { generatedExercises } from '@/data/generatedExercises'
 import { curatedMediaOverrides } from '@/data/curatedMediaOverrides'
+import { illustratedMedia } from '@/data/illustratedMedia'
 
 const curatedExercises: Exercise[] = [
   {
@@ -1286,19 +1287,31 @@ const curatedExercises: Exercise[] = [
 
 /**
  * Aplica as fotos reais encontradas para parte da lista curada acima
- * (ver curatedMediaOverrides.ts) e junta com os exercícios importados.
- * Os 31 exercícios curados sem correspondência confiável continuam
- * usando o card com gradiente + ícone (fallback elegante, nunca imagem
- * quebrada) até termos uma foto real pra eles também.
+ * (ver curatedMediaOverrides.ts), as ilustrações próprias para o
+ * pequeno resto sem foto real confiável (ver illustratedMedia.ts), e
+ * junta tudo com os exercícios importados. Resultado: os 564 exercícios
+ * do catálogo têm alguma imagem — real ou ilustrada — nunca placeholder
+ * vazio por padrão (o placeholder elegante continua existindo só como
+ * rede de segurança caso uma URL falhe ao carregar).
  */
 const curatedWithRealMedia: Exercise[] = curatedExercises.map((ex) => {
   const override = curatedMediaOverrides[ex.id]
-  if (!override) return ex
-  return {
-    ...ex,
-    thumbnail: override.photoStart,
-    media: { photoStart: override.photoStart, photoEnd: override.photoEnd },
+  if (override) {
+    return {
+      ...ex,
+      thumbnail: override.photoStart,
+      media: { photoStart: override.photoStart, photoEnd: override.photoEnd },
+    }
   }
+  const illustration = illustratedMedia[ex.id]
+  if (illustration) {
+    return {
+      ...ex,
+      thumbnail: illustration.photoStart,
+      media: { photoStart: illustration.photoStart, photoEnd: illustration.photoEnd },
+    }
+  }
+  return ex
 })
 
 // A biblioteca curada (com texto autoral) vem primeiro; os exercícios

@@ -1,0 +1,13 @@
+<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="300" height="300" fill="#141614"/>
+  <line x1="30" y1="230" x2="270" y2="230" stroke="#2A2E2A" stroke-width="2"/>
+  <g fill="none" stroke="#C6FF3A" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="228" cy="128" r="16" fill="#C6FF3A" stroke="none"/>
+    <path d="M212 138 L110 168" />
+    <path d="M110 168 L50 130" />
+    <path d="M110 168 L54 200" />
+    <path d="M110 168 L58 195" />
+    <path d="M110 168 L48 152" />
+  </g>
+  <text x="150" y="270" text-anchor="middle" fill="#A7ADA6" font-family="Inter, sans-serif" font-size="13">Braços e peito elevados, contraindo a lombar</text>
+</svg>

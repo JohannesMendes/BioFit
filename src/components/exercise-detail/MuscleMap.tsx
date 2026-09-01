@@ -42,8 +42,8 @@ export function MuscleMap({ highlights }: { highlights: MuscleHighlight[] }) {
   const data = view === 'anterior' ? anteriorData : posteriorData
 
   const bioLime = getCssVar('--color-bio-lime', '#C6FF3A')
-  const bioSynergist = getCssVar('--color-bio-synergist', '#5A6B3C')
-  const bioSurface2 = getCssVar('--color-bio-surface-2', '#2A2E2A')
+  const bioSynergist = getCssVar('--color-bio-synergist', '#5FBFAE')
+  const bioBody = getCssVar('--color-bio-muscle-body', '#3A3F38')
 
   return (
     <div className="flex flex-col items-center gap-3">
@@ -66,19 +66,25 @@ export function MuscleMap({ highlights }: { highlights: MuscleHighlight[] }) {
       <Model
         type={view}
         data={data}
-        bodyColor={bioSurface2}
+        bodyColor={bioBody}
         highlightedColors={[bioSynergist, bioLime]}
-        style={{ width: '11rem', padding: 0 }}
-        svgStyle={{ filter: 'drop-shadow(0 0 24px rgba(198,255,58,0.06))' }}
+        style={{ width: '13rem', padding: 0 }}
+        svgStyle={{ filter: 'drop-shadow(0 0 24px rgba(198,255,58,0.10))' }}
       />
 
-      <div className="flex items-center gap-4 font-body text-[11px] text-bio-ink-soft">
-        <span className="flex items-center gap-1.5">
-          <span className="h-2.5 w-2.5 rounded-full bg-bio-lime" /> Alvo
-        </span>
-        <span className="flex items-center gap-1.5">
-          <span className="h-2.5 w-2.5 rounded-full bg-bio-synergist" /> Sinergista
-        </span>
+      <div className="flex flex-col items-center gap-1">
+        <div className="flex items-center gap-4 font-body text-[11px] text-bio-ink-soft">
+          <span className="flex items-center gap-1.5">
+            <span className="h-2.5 w-2.5 rounded-full bg-bio-lime" /> Alvo
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: bioSynergist }} />
+            Sinergista
+          </span>
+        </div>
+        <p className="max-w-[220px] text-center font-body text-[10px] leading-snug text-bio-ink-soft/70">
+          Sinergista = músculo que ajuda no movimento, mas não é o foco principal do exercício.
+        </p>
       </div>
     </div>
   )

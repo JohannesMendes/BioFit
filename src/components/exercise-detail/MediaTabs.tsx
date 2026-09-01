@@ -1,11 +1,16 @@
 import { useState } from 'react'
+import { AlertTriangle } from 'lucide-react'
 import { SmartMedia } from '@/components/media/MediaPlaceholder'
 import { AnimatedFramesMedia } from '@/components/media/AnimatedFramesMedia'
 import { MuscleMap } from '@/components/exercise-detail/MuscleMap'
+import { curatedMediaOverrides } from '@/data/curatedMediaOverrides'
+import { illustratedMedia } from '@/data/illustratedMedia'
 import type { Exercise } from '@/types'
 
 export function MediaTabs({ exercise }: { exercise: Exercise }) {
   const [tab, setTab] = useState<'video' | 'anatomia'>('video')
+  const aproximado = curatedMediaOverrides[exercise.id]?.aproximado
+  const isIllustration = !!illustratedMedia[exercise.id]
 
   return (
     <div>
@@ -23,6 +28,17 @@ export function MediaTabs({ exercise }: { exercise: Exercise }) {
           Prévia rápida do movimento — veja a demonstração completa em vídeo abaixo.
         </p>
       </div>
+
+      {(aproximado || isIllustration) && (
+        <div className="mx-4 mb-1 flex items-start gap-2 rounded-bio-sm border border-amber-500/30 bg-amber-500/10 px-3 py-2">
+          <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-amber-400" strokeWidth={2} />
+          <p className="font-body text-[11px] leading-snug text-amber-200/90">
+            {isIllustration
+              ? 'Não achamos uma foto real confiável para este exercício — a imagem abaixo é uma ilustração própria, não uma foto.'
+              : `Foto de referência: ${aproximado}.`}
+          </p>
+        </div>
+      )}
 
       <div className="flex flex-nowrap border-b border-bio-line">
         {(['video', 'anatomia'] as const).map((t) => (

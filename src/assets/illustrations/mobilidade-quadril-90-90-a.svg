@@ -1,0 +1,13 @@
+<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="300" height="300" fill="#141614"/>
+  <ellipse cx="150" cy="235" rx="90" ry="8" fill="#1D201D"/>
+  <g fill="none" stroke="#C6FF3A" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="150" cy="110" r="16" fill="#C6FF3A" stroke="none"/>
+    <path d="M150 126 L150 175" />
+    <path d="M150 175 L200 205 L235 200" />
+    <path d="M150 175 L95 195 L60 165" />
+    <path d="M150 140 L115 155" />
+    <path d="M150 140 L190 150" />
+  </g>
+  <text x="150" y="270" text-anchor="middle" fill="#A7ADA6" font-family="Inter, sans-serif" font-size="13">Sentado, perna da frente dobrada a 90°</text>
+</svg>

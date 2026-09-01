@@ -26,7 +26,8 @@ export function AnimatedFramesMedia({
 }) {
   const [showB, setShowB] = useState(false)
   const [failed, setFailed] = useState(false)
-  const hasRealMedia = !!frameA && /^https?:\/\//.test(frameA) && !failed
+  const hasRealMedia =
+    !!frameA && !failed && (/^https?:\/\//.test(frameA) || frameA.startsWith('/') || frameA.startsWith('data:'))
 
   useEffect(() => {
     if (!hasRealMedia || !frameB || frameB === frameA) return
