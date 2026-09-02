@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Plus, Trash2, Dumbbell, ChevronRight } from 'lucide-react'
+import { Plus, Trash2, Dumbbell, ChevronRight, LogIn } from 'lucide-react'
 import { TopBar } from '@/components/layout/TopBar'
 import { BottomNav } from '@/components/layout/BottomNav'
 import { useWorkoutPlans } from '@/hooks/useWorkoutPlans'
 
 export function Treinos() {
-  const { plans, loaded, createPlan, deletePlan } = useWorkoutPlans()
+  const { isLoggedIn, plans, loaded, createPlan, deletePlan } = useWorkoutPlans()
   const [creating, setCreating] = useState(false)
   const [nome, setNome] = useState('')
 
@@ -15,6 +15,33 @@ export function Treinos() {
     createPlan(nome)
     setNome('')
     setCreating(false)
+  }
+
+  if (!isLoggedIn) {
+    return (
+      <div className="flex min-h-full flex-col">
+        <TopBar />
+        <main className="flex flex-1 flex-col items-center justify-center gap-3 px-8 text-center">
+          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-bio-lime/15">
+            <LogIn className="h-6 w-6 text-bio-lime" strokeWidth={1.75} />
+          </div>
+          <h1 className="font-display text-base font-bold text-bio-paper">
+            Faça login para montar suas fichas
+          </h1>
+          <p className="font-body text-sm text-bio-ink-soft">
+            Suas fichas de treino ficam salvas no seu aparelho, amarradas à sua conta — assim só
+            você vê o que criou, mesmo que outra pessoa use este mesmo celular depois.
+          </p>
+          <Link
+            to="/login"
+            className="mt-2 rounded-bio-sm bg-bio-lime px-6 py-2.5 font-body text-sm font-semibold text-bio-ink"
+          >
+            Fazer login
+          </Link>
+        </main>
+        <BottomNav />
+      </div>
+    )
   }
 
   return (

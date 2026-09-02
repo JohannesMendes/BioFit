@@ -1,16 +1,18 @@
 import { useMemo, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import { ChevronLeft, ChevronUp, ChevronDown, Trash2, Plus, Pencil } from 'lucide-react'
+import { useNavigate, useParams, Link } from 'react-router-dom'
+import { ChevronLeft, ChevronUp, ChevronDown, Trash2, Plus, Pencil, CheckCircle2, LogIn } from 'lucide-react'
 import { BottomNav } from '@/components/layout/BottomNav'
 import { SmartMedia } from '@/components/media/MediaPlaceholder'
 import { AddExerciseDrawer } from '@/components/treinos/AddExerciseDrawer'
 import { useWorkoutPlans } from '@/hooks/useWorkoutPlans'
+import { useWorkoutSessions } from '@/hooks/useWorkoutSessions'
 import { useExerciseLibrary } from '@/hooks/useExerciseLibrary'
 
 export function TreinoDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { plans, renamePlan, addItem, updateItem, removeItem, moveItem } = useWorkoutPlans()
+  const { isLoggedIn, plans, renamePlan, addItem, updateItem, removeItem, moveItem } = useWorkoutPlans()
+  const { logSession, hasSessionToday } = useWorkoutSessions()
   const { exercises } = useExerciseLibrary()
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [editingItemId, setEditingItemId] = useState<string | null>(null)
@@ -23,6 +25,21 @@ export function TreinoDetail() {
     const map = new Map(exercises.map((e) => [e.id, e]))
     return map
   }, [exercises])
+
+  if (!isLoggedIn) {
+    return (
+      <div className="flex min-h-full flex-col">
+        <main className="flex flex-1 flex-col items-center justify-center gap-3 px-8 text-center">
+          <LogIn className="h-6 w-6 text-bio-lime" strokeWidth={1.75} />
+          <p className="font-body text-sm text-bio-ink-soft">Faça login para ver suas fichas.</p>
+          <Link to="/login" className="rounded-bio-sm bg-bio-lime px-6 py-2.5 font-body text-sm font-semibold text-bio-ink">
+            Fazer login
+          </Link>
+        </main>
+        <BottomNav />
+      </div>
+    )
+  }
 
   if (!plan) {
     return (
@@ -208,6 +225,23 @@ export function TreinoDetail() {
           <Plus className="h-4 w-4" strokeWidth={2} />
           Adicionar exercício
         </button>
+
+        {plan.itens.length > 0 && (
+          <button
+            onClick={() => logSession(plan.id)}
+            disabled={hasSessionToday(plan.id)}
+            className="mt-2.5 flex w-full items-center justify-center gap-2 rounded-bio-md bg-bio-lime py-3 font-body text-sm font-semibold text-bio-ink disabled:bg-bio-surface disabled:text-bio-ink-soft"
+          >
+            <CheckCircle2 className="h-4 w-4" strokeWidth={2} />
+            {hasSessionToday(plan.id) ? 'Treino de hoje já concluído ✓' : 'Concluir treino de hoje'}
+          </button>
+        )}
+
+        {plan.itens.length > 0 && (
+          <p className="mt-2 text-center font-body text-[11px] text-bio-ink-soft">
+            Isso conta pra "Treinos", "Metas da semana" e "Sequência" na tela inicial.
+          </p>
+        )}
       </main>
 
       {drawerOpen && (

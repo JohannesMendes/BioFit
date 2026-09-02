@@ -44,6 +44,16 @@ export function HomeHeader() {
           <p className="mt-0.5 font-body text-[11px] text-bio-ink-soft">Sequência</p>
         </div>
       </div>
+
+      {!stats.isLoggedIn && (
+        <Link
+          to="/login"
+          className="mt-3 block rounded-bio-md border border-dashed border-bio-line px-3 py-2 text-center font-body text-xs font-medium text-bio-ink-soft"
+        >
+          <span className="font-semibold text-bio-lime">Faça login</span> para essas estatísticas
+          contarem seus treinos de verdade
+        </Link>
+      )}
     </header>
   )
 }

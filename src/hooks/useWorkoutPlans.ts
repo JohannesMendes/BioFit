@@ -1,27 +1,34 @@
 import { useCallback, useEffect, useState } from 'react'
+import { useAuth } from '@/context/AuthContext'
 import type { WorkoutPlan, WorkoutPlanItem } from '@/types'
 
 /**
  * useWorkoutPlans
  * -----------------------------------------------------------------
- * Persistência das fichas de treino (A, B, C, D...) do usuário.
+ * Persistência das fichas de treino (A, B, C, D...) — POR USUÁRIO.
  *
- * Guardamos em localStorage por enquanto — funciona offline e sem
- * fricção nenhuma. O pedido original também mencionava Firestore
- * (`users/{userId}/fichas`); não wireei isso ainda porque write
- * genérico de sub-coleção arbitrária no Firestore pede regras de
- * segurança e índices configurados no console do Firebase (fora do
- * que dá pra fazer só editando o código do app) — mas a interface
- * deste hook (create/update/remove/reorder) foi pensada pra trocar a
- * implementação por Firestore depois sem mudar nenhuma tela que a usa.
+ * Guardado em localStorage, com a chave amarrada ao e-mail de quem
+ * está logado (`biofit_workout_plans_<email>`). Isso resolve dois
+ * pontos: (1) exige login pra montar ficha — sem `user`, este hook
+ * simplesmente não deixa criar/editar nada; (2) se duas pessoas
+ * usarem o mesmo navegador/aparelho, cada uma só vê a sua própria
+ * lista, nunca a da outra.
+ *
+ * Continua tudo no aparelho da pessoa (localStorage), não em nuvem —
+ * era isso que foi pedido. Se um dia quiser sincronizar entre
+ * aparelhos, aí sim precisaria de Firestore (ou similar) por trás
+ * dessa mesma interface (create/update/remove/reorder).
  */
 
-const STORAGE_KEY = 'biofit_workout_plans'
 const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
-function loadPlans(): WorkoutPlan[] {
+function storageKey(email: string) {
+  return `biofit_workout_plans_${email.toLowerCase()}`
+}
+
+function loadPlans(email: string): WorkoutPlan[] {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY)
+    const raw = localStorage.getItem(storageKey(email))
     if (!raw) return []
     const parsed = JSON.parse(raw) as WorkoutPlan[]
     return Array.isArray(parsed) ? parsed : []
@@ -30,9 +37,9 @@ function loadPlans(): WorkoutPlan[] {
   }
 }
 
-function savePlans(plans: WorkoutPlan[]) {
+function savePlans(email: string, plans: WorkoutPlan[]) {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(plans))
+    localStorage.setItem(storageKey(email), JSON.stringify(plans))
   } catch {
     // localStorage indisponível (modo privado, quota cheia etc.) — ficha
     // segue funcionando na sessão atual, só não persiste entre sessões.
@@ -44,18 +51,28 @@ function uid() {
 }
 
 export function useWorkoutPlans() {
+  const { user } = useAuth()
   const [plans, setPlans] = useState<WorkoutPlan[]>([])
   const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
-    setPlans(loadPlans())
+    if (!user) {
+      setPlans([])
+      setLoaded(true)
+      return
+    }
+    setPlans(loadPlans(user.email))
     setLoaded(true)
-  }, [])
+  }, [user])
 
-  const persist = useCallback((next: WorkoutPlan[]) => {
-    setPlans(next)
-    savePlans(next)
-  }, [])
+  const persist = useCallback(
+    (next: WorkoutPlan[]) => {
+      if (!user) return
+      setPlans(next)
+      savePlans(user.email, next)
+    },
+    [user]
+  )
 
   const nextLetter = useCallback(
     (currentPlans: WorkoutPlan[] = plans) => {
@@ -67,6 +84,7 @@ export function useWorkoutPlans() {
 
   const createPlan = useCallback(
     (nome: string) => {
+      if (!user) return null
       const plan: WorkoutPlan = {
         id: uid(),
         letra: nextLetter(),
@@ -77,7 +95,7 @@ export function useWorkoutPlans() {
       persist([...plans, plan])
       return plan
     },
-    [plans, persist, nextLetter]
+    [user, plans, persist, nextLetter]
   )
 
   const renamePlan = useCallback(
@@ -147,6 +165,7 @@ export function useWorkoutPlans() {
   )
 
   return {
+    isLoggedIn: !!user,
     plans,
     loaded,
     createPlan,
