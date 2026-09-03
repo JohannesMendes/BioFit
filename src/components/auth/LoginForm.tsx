@@ -10,6 +10,7 @@ export function LoginForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [submitting, setSubmitting] = useState(false)
   const googleButtonRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -22,13 +23,15 @@ export function LoginForm() {
     // caso contrário o botão de fallback abaixo assume o lugar.
   }, [loginWithGoogleProfile, navigate])
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!email || !password) {
       setError('Preencha e-mail e senha.')
       return
     }
-    const result = login(email, password)
+    setSubmitting(true)
+    const result = await login(email, password)
+    setSubmitting(false)
     if (!result.ok) {
       setError(result.error)
       return
@@ -37,7 +40,7 @@ export function LoginForm() {
   }
 
   return (
-    <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+    <form className="flex flex-col gap-4" onSubmit={handleSubmit} autoComplete="off">
       <AuthInput label="E-mail" type="email" placeholder="voce@email.com" value={email} onChange={setEmail} />
       <AuthInput
         label="Senha"
@@ -46,6 +49,7 @@ export function LoginForm() {
         value={password}
         onChange={setPassword}
         error={error}
+        autoComplete="new-password"
       />
 
       <div className="flex justify-end">
@@ -54,8 +58,12 @@ export function LoginForm() {
         </Link>
       </div>
 
-      <button type="submit" className="mt-1 rounded-bio-pill bg-bio-lime py-3.5 font-display text-sm font-bold text-bio-ink">
-        Entrar
+      <button
+        type="submit"
+        disabled={submitting}
+        className="mt-1 rounded-bio-pill bg-bio-lime py-3.5 font-display text-sm font-bold text-bio-ink disabled:opacity-60"
+      >
+        {submitting ? 'Entrando…' : 'Entrar'}
       </button>
 
       <div className="flex items-center gap-3 py-1">

@@ -13,8 +13,9 @@ export function SignupForm() {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [avatarUrl, setAvatarUrl] = useState('')
   const [error, setError] = useState('')
+  const [submitting, setSubmitting] = useState(false)
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!name || !email || !password) {
       setError('Preencha nome, e-mail e senha.')
@@ -24,7 +25,9 @@ export function SignupForm() {
       setError('As senhas não coincidem.')
       return
     }
-    const result = signup(name, email, password, avatarUrl || undefined)
+    setSubmitting(true)
+    const result = await signup(name, email, password, avatarUrl || undefined)
+    setSubmitting(false)
     if (!result.ok) {
       setError(result.error)
       return
@@ -33,7 +36,7 @@ export function SignupForm() {
   }
 
   return (
-    <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+    <form className="flex flex-col gap-4" onSubmit={handleSubmit} autoComplete="off">
       <AuthInput label="Nome completo" placeholder="Seu nome" value={name} onChange={setName} />
       <AuthInput label="E-mail" type="email" placeholder="voce@email.com" value={email} onChange={setEmail} />
       <AuthInput
@@ -42,6 +45,7 @@ export function SignupForm() {
         placeholder="Mínimo 8 caracteres"
         value={password}
         onChange={setPassword}
+        autoComplete="new-password"
       />
       <AuthInput
         label="Confirmar senha"
@@ -50,6 +54,7 @@ export function SignupForm() {
         value={confirmPassword}
         onChange={setConfirmPassword}
         error={error}
+        autoComplete="new-password"
       />
 
       <ImageUploadField
@@ -60,8 +65,12 @@ export function SignupForm() {
         onChange={setAvatarUrl}
       />
 
-      <button type="submit" className="mt-1 rounded-bio-pill bg-bio-lime py-3.5 font-display text-sm font-bold text-bio-ink">
-        Criar conta
+      <button
+        type="submit"
+        disabled={submitting}
+        className="mt-1 rounded-bio-pill bg-bio-lime py-3.5 font-display text-sm font-bold text-bio-ink disabled:opacity-60"
+      >
+        {submitting ? 'Criando conta…' : 'Criar conta'}
       </button>
 
       <p className="mt-2 text-center font-body text-sm text-bio-ink-soft">

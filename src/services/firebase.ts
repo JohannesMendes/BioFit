@@ -1,5 +1,14 @@
 import { initializeApp } from 'firebase/app'
-import { GoogleAuthProvider, getAuth, signInWithPopup, type User } from 'firebase/auth'
+import {
+  GoogleAuthProvider,
+  getAuth,
+  signInWithPopup,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+  updateProfile,
+  type User,
+} from 'firebase/auth'
 
 /**
  * firebase.ts — configuração e autenticação REAIS via Firebase Auth.
@@ -50,4 +59,27 @@ export const loginWithGoogle = async (): Promise<User> => {
     console.error('Erro no login com Google:', error)
     throw error
   }
+}
+
+/**
+ * E-mail/senha via Firebase Auth de verdade — só existe (é usado pelo
+ * AuthContext) quando `isFirebaseConfigured` é true. A senha nunca passa
+ * pelo nosso código em texto puro: vai direto pro SDK do Firebase, que
+ * lida com hashing e sessão do jeito certo. Isso substitui o mock de
+ * localStorage (que guardava senha em texto puro — nunca foi seguro,
+ * só uma simulação pra prototipar a tela).
+ */
+export const signUpWithEmail = async (name: string, email: string, password: string): Promise<User> => {
+  const result = await createUserWithEmailAndPassword(auth, email, password)
+  if (name) await updateProfile(result.user, { displayName: name })
+  return result.user
+}
+
+export const loginWithEmail = async (email: string, password: string): Promise<User> => {
+  const result = await signInWithEmailAndPassword(auth, email, password)
+  return result.user
+}
+
+export const sendResetPasswordEmail = async (email: string): Promise<void> => {
+  await sendPasswordResetEmail(auth, email)
 }
