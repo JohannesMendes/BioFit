@@ -1,15 +1,18 @@
 /**
  * curatedMediaOverrides.ts
  * ------------------------------------------------------------------------
- * 42 dos 46 exercícios curados (src/data/exercises.ts) têm aqui uma foto
+ * 44 dos 46 exercícios curados (src/data/exercises.ts) têm aqui uma foto
  * real do free-exercise-db. A maioria é o exercício exato; alguns são a
  * melhor variação disponível no dataset — esses ficam marcados com
  * `aproximado` (mostrado como aviso na tela do exercício), pra ser
  * transparente que o equipamento na foto pode diferir um pouco do texto.
  *
- * Os 4 que ainda não aparecem aqui (crucifixo-maquina, superman,
- * mobilidade-quadril-90-90, alongamento-dinamico-ombro) usam uma
- * ilustração própria em vez de foto — ver illustratedMedia.tsx.
+ * Os 2 que ainda não aparecem aqui (crucifixo-maquina,
+ * mobilidade-quadril-90-90) usam uma ilustração própria em vez de foto
+ * — ver illustratedMedia.tsx. Já tentei achar foto real pros dois:
+ * pro crucifixo só existe no banco a versão invertida (trabalha as
+ * costas, não o peito); pro 90/90 só existe um alongamento de
+ * isquiotibiais deitado, não a mobilidade de quadril sentada.
  *
  * Aplicado em src/data/exercises.ts: cada exercício curado cujo id
  * aparecer aqui tem thumbnail/media sobrescritos por essa foto real.
@@ -22,6 +25,8 @@ export interface CuratedMediaOverride {
 }
 
 export const curatedMediaOverrides: Record<string, CuratedMediaOverride> = {
+  superman: { photoStart: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Superman/0.jpg', photoEnd: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Superman/1.jpg', aproximado: undefined },
+  'alongamento-dinamico-ombro': { photoStart: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Arm_Circles/0.jpg', photoEnd: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Arm_Circles/1.jpg', aproximado: undefined },
   'abdominal-bicicleta': { photoStart: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Air_Bike/0.jpg', photoEnd: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Air_Bike/1.jpg', aproximado: undefined },
   'abdominal-supra': { photoStart: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/3_4_Sit-Up/0.jpg', photoEnd: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/3_4_Sit-Up/1.jpg', aproximado: undefined },
   'agachamento-bulgaro': { photoStart: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Smith_Single-Leg_Split_Squat/0.jpg', photoEnd: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Smith_Single-Leg_Split_Squat/1.jpg', aproximado: 'a imagem mostra a versão na máquina Smith; com halteres o movimento é idêntico' },
