@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { ChevronLeft, WifiOff } from 'lucide-react'
+import { ChevronLeft } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { BottomNav } from '@/components/layout/BottomNav'
 import { EnvironmentToggle } from '@/components/exercises/EnvironmentToggle'
@@ -16,7 +16,7 @@ export function ExerciseList() {
   const grupoId = params.get('grupo')
   const grupo = muscleGroups.find((g) => g.id === grupoId)
 
-  const { exercises, loading, source, error } = useExerciseLibrary()
+  const { exercises, loading } = useExerciseLibrary()
   const [env, setEnv] = useState<Environment | 'todos'>('todos')
   const [query, setQuery] = useState('')
 
@@ -54,12 +54,6 @@ export function ExerciseList() {
         </div>
         <EnvironmentToggle value={env} onChange={setEnv} />
         <LocalSearch value={query} onChange={setQuery} placeholder={`Buscar em ${grupo ? grupo.name.toLowerCase() : 'exercícios'}`} />
-        {source === 'local-fallback' && error && (
-          <div className="flex items-center gap-2 rounded-bio-md border border-bio-line bg-bio-surface px-3 py-2 font-body text-[11px] text-bio-ink-soft">
-            <WifiOff className="h-3.5 w-3.5 shrink-0 text-bio-lime" strokeWidth={1.75} />
-            Usando a biblioteca local do BioFit — ExerciseDB indisponível no momento.
-          </div>
-        )}
       </header>
 
       <main className="flex-1 px-5 py-4">

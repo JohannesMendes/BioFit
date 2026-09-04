@@ -1,10 +1,7 @@
-import { useEffect, useState } from 'react'
-import type { Exercise } from '@/types'
 import { exercises as localExercises } from '@/data/exercises'
-import { getExerciseLibrary } from '@/services/exerciseApi'
-import { adaptExerciseDbList } from '@/lib/exerciseDbAdapter'
+import type { Exercise } from '@/types'
 
-export type LibrarySource = 'exercisedb' | 'local-fallback'
+export type LibrarySource = 'local'
 
 interface UseExerciseLibraryResult {
   exercises: Exercise[]
@@ -16,55 +13,22 @@ interface UseExerciseLibraryResult {
 /**
  * useExerciseLibrary
  * -------------------
- * Fonte primária: nossa biblioteca local (`src/data/exercises.ts` — 46
- * exercícios curados à mão + ~530 importados do dataset open-source
- * exercicios-bd-ptbr/free-exercise-db, cobrindo os 12 grupos musculares
- * com todo tipo de equipamento e SEMPRE com foto real).
+ * Fonte ÚNICA: nossa biblioteca local (`src/data/exercises.ts` — 46
+ * exercícios curados à mão + ~518 importados do dataset open-source
+ * exercicios-bd-ptbr/free-exercise-db), cobrindo os 12 grupos musculares
+ * com todo tipo de equipamento, nome em português revisado e SEMPRE
+ * com foto real.
  *
- * Complemento opcional: se o exercisedb-api externo responder, seus
- * exercícios são ACRESCENTADOS à lista local (nunca a substituem) — dá
- * mais variedade quando ele está no ar, sem depender dele pra cobertura
- * básica, já que o próprio endpoint gratuito não garante uptime.
+ * ATÉ 2024-XX a gente também misturava o exercisedb-api externo (ao
+ * vivo, oss.exercisedb.dev) como complemento. Foi desligado de
+ * propósito: aquela API usa os bonecos animados de fundo branco (não os
+ * padrões de foto real que definimos pro app) e o nome dela era
+ * traduzido palavra-por-palavra no navegador (é de lá que vinham nomes
+ * quebrados tipo "Inverse perna rosca"). O código de integração
+ * continua no repo (src/services/exerciseApi.ts,
+ * src/lib/exerciseDbAdapter.ts) caso um dia vocês queiram uma fonte
+ * paga/própria de GIFs de verdade — só não está mais ligado por padrão.
  */
 export function useExerciseLibrary(): UseExerciseLibraryResult {
-  const [state, setState] = useState<UseExerciseLibraryResult>({
-    exercises: localExercises,
-    loading: true,
-    source: 'local-fallback',
-    error: null,
-  })
-
-  useEffect(() => {
-    let cancelled = false
-
-    getExerciseLibrary().then((raw) => {
-      if (cancelled) return
-      if (!raw || raw.length === 0) {
-        setState({
-          exercises: localExercises,
-          loading: false,
-          source: 'local-fallback',
-          error: null,
-        })
-        return
-      }
-      // Mescla: local primeiro (garantido), API depois — descartando da
-      // API qualquer exercício com nome muito parecido a um já local,
-      // pra evitar duplicata óbvia mostrada duas vezes ao usuário.
-      const localNames = new Set(localExercises.map((e) => e.name.toLowerCase().trim()))
-      const extra = adaptExerciseDbList(raw).filter((e) => !localNames.has(e.name.toLowerCase().trim()))
-      setState({
-        exercises: [...localExercises, ...extra],
-        loading: false,
-        source: 'exercisedb',
-        error: null,
-      })
-    })
-
-    return () => {
-      cancelled = true
-    }
-  }, [])
-
-  return state
+  return { exercises: localExercises, loading: false, source: 'local', error: null }
 }

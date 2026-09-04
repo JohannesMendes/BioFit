@@ -2,15 +2,19 @@ import type { Exercise } from '@/types'
 
 /**
  * Exercícios importados do dataset open-source "exercicios-bd-ptbr"
- * (tradução PT-BR do free-exercise-db), filtrados para:
- * - categoria "força" (+ um pequeno reforço de alongamento só para
- *   lombar/pescoço, que tinham poucos exercícios de força)
- * - equipamento mapeado para o nosso enum (Barra, Halter, Polia,
- *   Máquina, Peso Corporal, Kettlebell, Elástico)
- * - todos com pelo menos 1 foto real (nunca ficam sem mídia)
- * - sem duplicatas: os que já existem na lista curada abaixo foram
- *   removidos daqui (a versão curada, com texto autoral, prevalece —
- *   veja curatedMediaOverrides.ts para a foto real dela)
+ * (tradução PT-BR do free-exercise-db). Cobertura: 12 grupos musculares,
+ * todo tipo de equipamento, todos com foto real.
+ *
+ * Regras aplicadas nesta versão:
+ * - "Em Casa" é só Peso Corporal, Elástico e Halter — Kettlebell,
+ *   Barra, Máquina e Polia são sempre Academia (regra do time)
+ * - Zero duplicata: checado tanto por nome quanto pela ORIGEM DA FOTO
+ *   (duas entradas com nomes diferentes mas a mesma foto real também
+ *   contam como duplicata — foi assim que achamos 27 casos escondidos
+ *   que a checagem só-por-nome não pegava)
+ * - Nomes revisados: alguns vieram estranhos do dataset original
+ *   (ex.: "Flyes Corporal", "Agachamento Corporal") e foram corrigidos
+ *   pra nomenclatura de academia em português
  *
  * Gerado por script (transform_exercises.py) a partir de:
  * https://github.com/joao-gugel/exercicios-bd-ptbr (dados + instruções)
@@ -20,47 +24,6 @@ import type { Exercise } from '@/types'
  * muscular/equipamento, mude o script e regere este arquivo.
  */
 export const generatedExercises: Exercise[] = [
-  {
-    "id": "fdb-3-4-sit-up",
-    "name": "Abdominal 3/4",
-    "muscleGroups": [
-      "abdomen"
-    ],
-    "equipment": "Peso Corporal",
-    "environment": [
-      "academia",
-      "casa"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/3_4_Sit-Up/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "reto-abdominal",
-        "role": "alvo"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/3_4_Sit-Up/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/3_4_Sit-Up/1.jpg"
-    },
-    "explanation": {
-      "simples": "Deite-se no chão e prenda os pés. As pernas devem estar flexionadas nos joelhos. Coloque as mãos atrás ou ao lado da cabeça. Comece com as costas no chão. Esta é a posição inicial.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: abdomen.",
-        "vetorForca": "A força atua na flexão do tronco ou estabilização da coluna — priorize contração consciente em vez de velocidade.",
-        "amplitude": "Siga a execução completa: Deite-se no chão e prenda os pés. As pernas devem estar flexionadas nos joelhos. → Coloque as mãos atrás ou ao lado da cabeça. Comece com as costas no chão. Esta é a posição inicial. → Flexione os quadris e a coluna para levantar o tronco em direção aos joelhos. → No topo da contração, o tronco deve estar perpendicular ao chão. Inverta o movimento, descendo apenas 3/4 do caminho. → Repita para a quantidade recomendada de repetições."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Peso Corporal"
-      ],
-      "errosComuns": [
-        "Evite puxar o pescoço com as mãos em vez de usar o abdômen para iniciar o movimento."
-      ],
-      "substitutos": []
-    }
-  },
   {
     "id": "fdb-ab-crunch-machine",
     "name": "Máquina de Abdominal",
@@ -112,8 +75,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Advanced_Kettlebell_Windmill/0.jpg",
     "difficulty": "intermediário",
@@ -153,88 +115,6 @@ export const generatedExercises: Exercise[] = [
       ],
       "errosComuns": [
         "Evite puxar o pescoço com as mãos em vez de usar o abdômen para iniciar o movimento."
-      ],
-      "substitutos": []
-    }
-  },
-  {
-    "id": "fdb-air-bike",
-    "name": "Bicicleta no Ar",
-    "muscleGroups": [
-      "abdomen"
-    ],
-    "equipment": "Peso Corporal",
-    "environment": [
-      "academia",
-      "casa"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Air_Bike/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "reto-abdominal",
-        "role": "alvo"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Air_Bike/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Air_Bike/1.jpg"
-    },
-    "explanation": {
-      "simples": "Deite-se de costas no chão, com a região lombar pressionada contra o solo. Coloque as mãos ao lado da cabeça, sem forçar o pescoço. Levante os ombros para a posição de crunch. Levante os joelhos até ficarem perpendiculares ao chão, com as canelas paralelas ao chão. Esta é a posiç.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: abdomen.",
-        "vetorForca": "A força atua na flexão do tronco ou estabilização da coluna — priorize contração consciente em vez de velocidade.",
-        "amplitude": "Siga a execução completa: Deite-se de costas no chão, com a região lombar pressionada contra o solo. Coloque as mãos ao lado da cabeça, sem forçar o pescoço. Levante os ombros para a posição de crunch. → Levante os joelhos até ficarem perpendiculares ao chão, com as canelas paralelas ao chão. Esta é a posição inicial. → Simultaneamente, faça um movimento de pedalar, chutando para frente com a perna direita e trazendo o joelho esquerdo para perto. Aproxime o cotovelo direito do joelho esquerdo, fazendo um crunch lateral, enquanto expira. → Volte à posição inicial enquanto inspira. → Faça um crunch para o lado oposto, aproximando o cotovelo esquerdo do joelho direito e expire. → Continue alternando até completar as repetições recomendadas para cada lado."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Peso Corporal"
-      ],
-      "errosComuns": [
-        "Evite puxar o pescoço com as mãos em vez de usar o abdômen para iniciar o movimento."
-      ],
-      "substitutos": []
-    }
-  },
-  {
-    "id": "fdb-alternate-hammer-curl",
-    "name": "Rosca Martelo Alternada",
-    "muscleGroups": [
-      "biceps"
-    ],
-    "equipment": "Halter",
-    "environment": [
-      "academia",
-      "casa"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Alternate_Hammer_Curl/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "biceps",
-        "role": "alvo"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Alternate_Hammer_Curl/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Alternate_Hammer_Curl/1.jpg"
-    },
-    "explanation": {
-      "simples": "Fique em pé com o tronco ereto e um halter em cada mão, mantidos ao longo do corpo. Os cotovelos devem ficar próximos ao torso. As palmas das mãos devem estar voltadas para o torso. Esta é a posição inicial.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: biceps.",
-        "vetorForca": "A força ocorre na flexão do cotovelo, com o antebraço se aproximando do braço — mantenha o cotovelo fixo ao lado do corpo.",
-        "amplitude": "Siga a execução completa: Fique em pé com o tronco ereto e um halter em cada mão, mantidos ao longo do corpo. Os cotovelos devem ficar próximos ao torso. → As palmas das mãos devem estar voltadas para o torso. Esta é a posição inicial. → Mantendo o braço superior parado, curve o peso direito para frente enquanto contrai o bíceps e expira. Continue até o bíceps estar totalmente contraído e o halter na altura do ombro. Segure a posição contraída por um segundo, apertando o bíceps. Dica: Apenas os antebraços devem se mover. → Lentamente, retorne o halter à posição inicial enquanto inspira. → Repita o movimento com a mão esquerda. Isso equivale a uma repetição. → Continue alternando para a quantidade recomendada de repetições."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Halter"
-      ],
-      "errosComuns": [
-        "Evite balançar o tronco para \"ajudar\" a subir o peso — isso tira a tensão do bíceps."
       ],
       "substitutos": []
     }
@@ -418,8 +298,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Alternating_Floor_Press/0.jpg",
     "difficulty": "iniciante",
@@ -476,8 +355,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Alternating_Hang_Clean/0.jpg",
     "difficulty": "intermediário",
@@ -538,8 +416,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Alternating_Kettlebell_Press/0.jpg",
     "difficulty": "intermediário",
@@ -584,8 +461,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Alternating_Kettlebell_Row/0.jpg",
     "difficulty": "intermediário",
@@ -633,8 +509,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Alternating_Renegade_Row/0.jpg",
     "difficulty": "avançado",
@@ -1107,56 +982,6 @@ export const generatedExercises: Exercise[] = [
       ],
       "errosComuns": [
         "Evite puxar o pescoço com as mãos em vez de usar o abdômen para iniciar o movimento."
-      ],
-      "substitutos": []
-    }
-  },
-  {
-    "id": "fdb-barbell-bench-press-medium-grip",
-    "name": "Supino Reto com Barra - Pegada Média",
-    "muscleGroups": [
-      "peito",
-      "ombros",
-      "triceps"
-    ],
-    "equipment": "Barra",
-    "environment": [
-      "academia"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Bench_Press_-_Medium_Grip/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "peitoral-maior",
-        "role": "alvo"
-      },
-      {
-        "pathId": "deltoide-anterior",
-        "role": "sinergista"
-      },
-      {
-        "pathId": "triceps",
-        "role": "sinergista"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Bench_Press_-_Medium_Grip/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Bench_Press_-_Medium_Grip/1.jpg"
-    },
-    "explanation": {
-      "simples": "Deite-se em um banco reto. Com uma pegada média (que forme um ângulo de 90 graus no meio do movimento), levante a barra do rack e segure-a acima de você com os braços travados. Esta será sua posição inicial. Da posição inicial, inspire e desça lentamente até a barra tocar o meio .",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: peito. Músculos secundários: ombros, triceps.",
-        "vetorForca": "De forma geral, a força é aplicada perpendicular ao tronco, empurrando a carga para longe do peito — controle a descida para maximizar o trabalho muscular.",
-        "amplitude": "Siga a execução completa: Deite-se em um banco reto. Com uma pegada média (que forme um ângulo de 90 graus no meio do movimento), levante a barra do rack e segure-a acima de você com os braços travados. Esta será sua posição inicial. → Da posição inicial, inspire e desça lentamente até a barra tocar o meio do seu peito. → Após uma breve pausa, empurre a barra de volta à posição inicial enquanto expira, focando nos músculos do peito. Trave os braços e contraia o peito no topo, segure por um segundo e desça novamente. → Repita pelo número prescrito de repetições. → Ao terminar, recoloque a barra no rack."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Barra"
-      ],
-      "errosComuns": [
-        "Evite arquear demais a lombar ou deixar os ombros subirem em direção às orelhas durante o movimento."
       ],
       "substitutos": []
     }
@@ -2102,57 +1927,6 @@ export const generatedExercises: Exercise[] = [
     }
   },
   {
-    "id": "fdb-bench-dips",
-    "name": "Mergulho no Banco",
-    "muscleGroups": [
-      "triceps",
-      "peito",
-      "ombros"
-    ],
-    "equipment": "Peso Corporal",
-    "environment": [
-      "academia",
-      "casa"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bench_Dips/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "triceps",
-        "role": "alvo"
-      },
-      {
-        "pathId": "peitoral-maior",
-        "role": "sinergista"
-      },
-      {
-        "pathId": "deltoide-anterior",
-        "role": "sinergista"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bench_Dips/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bench_Dips/1.jpg"
-    },
-    "explanation": {
-      "simples": "Para este exercício, posicione um banco atrás de suas costas. Com o banco perpendicular ao seu corpo e de costas para ele, segure a borda do banco com as mãos totalmente estendidas, afastadas na largura dos ombros. Estenda as pernas para a frente, dobradas na cintura e perpendicu.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: triceps. Músculos secundários: peito, ombros.",
-        "vetorForca": "A força ocorre na extensão do cotovelo — mantenha o braço estável e evite abrir o cotovelo para os lados.",
-        "amplitude": "Siga a execução completa: Para este exercício, posicione um banco atrás de suas costas. Com o banco perpendicular ao seu corpo e de costas para ele, segure a borda do banco com as mãos totalmente estendidas, afastadas na largura dos ombros. Estenda as pernas para a frente, dobradas na cintura e perpendiculares ao tronco. Esta será a posição inicial. → Abaixe o corpo lentamente, inspirando, ao dobrar os cotovelos até que o ângulo entre o braço e o antebraço seja ligeiramente menor que 90 graus. Dica: Mantenha os cotovelos o mais próximo possível durante o movimento. Os antebraços devem sempre apontar para baixo. → Use os tríceps para levantar o tronco de volta à posição inicial. → Repita para a quantidade recomendada de repetições."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Peso Corporal"
-      ],
-      "errosComuns": [
-        "Evite deixar o cotovelo se afastar do corpo, o que reduz o isolamento do tríceps."
-      ],
-      "substitutos": []
-    }
-  },
-  {
     "id": "fdb-bench-press-with-bands",
     "name": "Supino com Elásticos",
     "muscleGroups": [
@@ -2661,8 +2435,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bent_Press/0.jpg",
     "difficulty": "avançado",
@@ -2771,7 +2544,7 @@ export const generatedExercises: Exercise[] = [
   },
   {
     "id": "fdb-body-tricep-press",
-    "name": "Tríceps Press Corporal",
+    "name": "Tríceps com Peso Corporal",
     "muscleGroups": [
       "triceps"
     ],
@@ -2812,7 +2585,7 @@ export const generatedExercises: Exercise[] = [
   },
   {
     "id": "fdb-bodyweight-flyes",
-    "name": "Flyes Corporal",
+    "name": "Rotação em Prancha com Barra",
     "muscleGroups": [
       "peito",
       "abdomen",
@@ -2866,57 +2639,6 @@ export const generatedExercises: Exercise[] = [
     }
   },
   {
-    "id": "fdb-bodyweight-squat",
-    "name": "Agachamento Corporal",
-    "muscleGroups": [
-      "quadriceps",
-      "gluteos",
-      "posterior"
-    ],
-    "equipment": "Peso Corporal",
-    "environment": [
-      "academia",
-      "casa"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bodyweight_Squat/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "quadriceps",
-        "role": "alvo"
-      },
-      {
-        "pathId": "gluteo-maximo",
-        "role": "sinergista"
-      },
-      {
-        "pathId": "isquiotibiais",
-        "role": "sinergista"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bodyweight_Squat/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bodyweight_Squat/1.jpg"
-    },
-    "explanation": {
-      "simples": "Fique em pé com os pés na largura dos ombros, mãos atrás da cabeça. Esta é a posição inicial. Flexione joelhos e quadris, sentando para trás com os quadris.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: quadriceps. Músculos secundários: gluteos, posterior.",
-        "vetorForca": "A força é aplicada na extensão do joelho e/ou quadril — mantenha o joelho alinhado com a ponta do pé.",
-        "amplitude": "Siga a execução completa: Fique em pé com os pés na largura dos ombros, mãos atrás da cabeça. Esta é a posição inicial. → Flexione joelhos e quadris, sentando para trás com os quadris. → Desça até a amplitude completa, se possível, e reverta rapidamente o movimento para retornar à posição inicial. Mantenha o peito erguido e os joelhos para fora durante o agachamento."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Peso Corporal"
-      ],
-      "errosComuns": [
-        "Evite deixar o joelho ultrapassar demais a ponta do pé ou colapsar para dentro."
-      ],
-      "substitutos": []
-    }
-  },
-  {
     "id": "fdb-bosu-ball-cable-crunch-with-side-bends",
     "name": "Crunch com Cabo e Bosu Ball com Flexões Laterais",
     "muscleGroups": [
@@ -2965,8 +2687,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bottoms-Up_Clean_From_The_Hang_Position/0.jpg",
     "difficulty": "intermediário",
@@ -3313,51 +3034,6 @@ export const generatedExercises: Exercise[] = [
         "articulacoes": "Músculo alvo: peito. Músculos secundários: ombros, triceps.",
         "vetorForca": "De forma geral, a força é aplicada perpendicular ao tronco, empurrando a carga para longe do peito — controle a descida para maximizar o trabalho muscular.",
         "amplitude": "Siga a execução completa: Ajuste o peso para uma quantidade apropriada e sente-se, segurando as alças. Os braços superiores devem estar a cerca de 45 graus do corpo, com a cabeça e o peito erguidos. Os cotovelos devem estar dobrados a cerca de 90 graus. Esta é a posição inicial. → Comece estendendo os cotovelos, pressionando as alças juntas diretamente à sua frente. Mantenha as escápulas retraídas durante o movimento. → Após uma pausa na extensão total, retorne à posição inicial, mantendo a tensão nos cabos. → Você também pode executar este movimento com as costas fora do encosto, em inclinação ou declinação, ou alternando as mãos."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Polia"
-      ],
-      "errosComuns": [
-        "Evite arquear demais a lombar ou deixar os ombros subirem em direção às orelhas durante o movimento."
-      ],
-      "substitutos": []
-    }
-  },
-  {
-    "id": "fdb-cable-crossover",
-    "name": "Crossover na Polia",
-    "muscleGroups": [
-      "peito",
-      "ombros"
-    ],
-    "equipment": "Polia",
-    "environment": [
-      "academia"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cable_Crossover/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "peitoral-maior",
-        "role": "alvo"
-      },
-      {
-        "pathId": "deltoide-anterior",
-        "role": "sinergista"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cable_Crossover/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cable_Crossover/1.jpg"
-    },
-    "explanation": {
-      "simples": "Posicione as polias na parte alta (acima da cabeça), selecione a resistência e segure as alças com cada mão. Dê um passo à frente, mantendo o tronco levemente inclinado para a frente, e junte os braços à sua frente. Esta é a posição inicial.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: peito. Músculos secundários: ombros.",
-        "vetorForca": "De forma geral, a força é aplicada perpendicular ao tronco, empurrando a carga para longe do peito — controle a descida para maximizar o trabalho muscular.",
-        "amplitude": "Siga a execução completa: Posicione as polias na parte alta (acima da cabeça), selecione a resistência e segure as alças com cada mão. → Dê um passo à frente, mantendo o tronco levemente inclinado para a frente, e junte os braços à sua frente. Esta é a posição inicial. → Com os cotovelos levemente flexionados, abra os braços lateralmente em um arco amplo até sentir o peitoral alongar, inspirando. → Retorne os braços à posição inicial expirando, seguindo o mesmo arco de movimento. → Segure por um segundo e repita o movimento pelo número de repetições prescrito."
       }
     },
     "fichaTecnica": {
@@ -4415,47 +4091,6 @@ export const generatedExercises: Exercise[] = [
     }
   },
   {
-    "id": "fdb-calf-raise-on-a-dumbbell",
-    "name": "Elevação de Panturrilha com Halter",
-    "muscleGroups": [
-      "panturrilha"
-    ],
-    "equipment": "Halter",
-    "environment": [
-      "academia",
-      "casa"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Calf_Raise_On_A_Dumbbell/0.jpg",
-    "difficulty": "intermediário",
-    "muscleHighlights": [
-      {
-        "pathId": "gastrocnemio",
-        "role": "alvo"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Calf_Raise_On_A_Dumbbell/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Calf_Raise_On_A_Dumbbell/1.jpg"
-    },
-    "explanation": {
-      "simples": "Segure-se em um objeto firme para equilíbrio e fique em cima do cabo de um halter, de preferência com placas redondas para aumentar a instabilidade. Role o pé levemente para frente para alongar a panturrilha. Esta é a posição inicial.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: panturrilha.",
-        "vetorForca": "O movimento é de flexão plantar do tornozelo — priorize amplitude completa em vez de repetições rápidas e curtas.",
-        "amplitude": "Siga a execução completa: Segure-se em um objeto firme para equilíbrio e fique em cima do cabo de um halter, de preferência com placas redondas para aumentar a instabilidade. → Role o pé levemente para frente para alongar a panturrilha. Esta é a posição inicial. → Eleve a panturrilha rolando o pé sobre o cabo, estendendo-a completamente enquanto expira. Contraia a panturrilha no topo e segure por um segundo. Dica: Ao subir, role o halter levemente para trás. → Ao descer, inspire e role o halter para frente para um melhor alongamento. → Repita para a quantidade recomendada de repetições."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Halter"
-      ],
-      "errosComuns": [
-        "Evite \"quicar\" no fundo do movimento, perdendo o controle e a tensão muscular."
-      ],
-      "substitutos": []
-    }
-  },
-  {
     "id": "fdb-calf-raises-with-bands",
     "name": "Elevação de Panturrilha com Banda",
     "muscleGroups": [
@@ -4537,57 +4172,6 @@ export const generatedExercises: Exercise[] = [
       ],
       "errosComuns": [
         "Evite elevar os ombros junto com o movimento (encolhendo o trapézio) em vez de isolar o deltoide."
-      ],
-      "substitutos": []
-    }
-  },
-  {
-    "id": "fdb-cat-stretch",
-    "name": "Alongamento do Gato",
-    "muscleGroups": [
-      "lombar",
-      "costas",
-      "ombros"
-    ],
-    "equipment": "Peso Corporal",
-    "environment": [
-      "academia",
-      "casa"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cat_Stretch/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "eretores-espinha",
-        "role": "alvo"
-      },
-      {
-        "pathId": "grande-dorsal",
-        "role": "sinergista"
-      },
-      {
-        "pathId": "trapezio-superior",
-        "role": "sinergista"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cat_Stretch/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cat_Stretch/1.jpg"
-    },
-    "explanation": {
-      "simples": "Posicione-se no chão em quatro apoios (mãos e joelhos). Puxe a barriga para dentro e arredonde a coluna, a região lombar, os ombros e o pescoço, deixando a cabeça cair.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: lombar. Músculos secundários: costas, ombros.",
-        "vetorForca": "O movimento trabalha extensão ou estabilização da coluna — mantenha a coluna em posição neutra durante toda a execução.",
-        "amplitude": "Siga a execução completa: Posicione-se no chão em quatro apoios (mãos e joelhos). → Puxe a barriga para dentro e arredonde a coluna, a região lombar, os ombros e o pescoço, deixando a cabeça cair. → Mantenha a posição por 15 segundos."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Peso Corporal"
-      ],
-      "errosComuns": [
-        "Evite arredondar excessivamente a coluna sob carga."
       ],
       "substitutos": []
     }
@@ -6327,7 +5911,7 @@ export const generatedExercises: Exercise[] = [
   },
   {
     "id": "fdb-dips-triceps-version",
-    "name": "Mergulho - Versão Tríceps",
+    "name": "Mergulho para Tríceps",
     "muscleGroups": [
       "triceps",
       "peito",
@@ -6390,8 +5974,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Double_Kettlebell_Alternating_Hang_Clean/0.jpg",
     "difficulty": "intermediário",
@@ -6458,8 +6041,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Double_Kettlebell_Jerk/0.jpg",
     "difficulty": "intermediário",
@@ -6514,8 +6096,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Double_Kettlebell_Push_Press/0.jpg",
     "difficulty": "intermediário",
@@ -6570,8 +6151,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Double_Kettlebell_Snatch/0.jpg",
     "difficulty": "avançado",
@@ -6627,8 +6207,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Double_Kettlebell_Windmill/0.jpg",
     "difficulty": "intermediário",
@@ -6712,57 +6291,6 @@ export const generatedExercises: Exercise[] = [
       ],
       "errosComuns": [
         "Evite balançar o tronco para \"ajudar\" a subir o peso — isso tira a tensão do bíceps."
-      ],
-      "substitutos": []
-    }
-  },
-  {
-    "id": "fdb-dumbbell-bench-press",
-    "name": "Supino com Halteres",
-    "muscleGroups": [
-      "peito",
-      "ombros",
-      "triceps"
-    ],
-    "equipment": "Halter",
-    "environment": [
-      "academia",
-      "casa"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Bench_Press/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "peitoral-maior",
-        "role": "alvo"
-      },
-      {
-        "pathId": "deltoide-anterior",
-        "role": "sinergista"
-      },
-      {
-        "pathId": "triceps",
-        "role": "sinergista"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Bench_Press/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Bench_Press/1.jpg"
-    },
-    "explanation": {
-      "simples": "Deite-se em um banco plano com um halter em cada mão apoiado sobre as coxas. As palmas das mãos devem estar voltadas uma para a outra. Use as coxas para ajudar a levantar os halteres, erguendo-os um de cada vez até segurá-los na frente de você na largura dos ombros.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: peito. Músculos secundários: ombros, triceps.",
-        "vetorForca": "De forma geral, a força é aplicada perpendicular ao tronco, empurrando a carga para longe do peito — controle a descida para maximizar o trabalho muscular.",
-        "amplitude": "Siga a execução completa: Deite-se em um banco plano com um halter em cada mão apoiado sobre as coxas. As palmas das mãos devem estar voltadas uma para a outra. → Use as coxas para ajudar a levantar os halteres, erguendo-os um de cada vez até segurá-los na frente de você na largura dos ombros. → Na largura dos ombros, gire os pulsos para frente, de modo que as palmas fiquem voltadas para longe de você. Os halteres devem ficar ao lado do peito, com o braço superior e o antebraço formando um ângulo de 90 graus. Mantenha o controle total dos halteres. Esta será a posição inicial. → Ao expirar, use o peito para empurrar os halteres para cima. Trave os braços no topo do movimento e contraia o peito, segure por um segundo e depois desça lentamente. Dica: Idealmente, baixar o peso deve levar o dobro do tempo que levantá-lo. → Repita o movimento pelo número de repetições prescrito no seu programa de treino."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Halter"
-      ],
-      "errosComuns": [
-        "Evite arquear demais a lombar ou deixar os ombros subirem em direção às orelhas durante o movimento."
       ],
       "substitutos": []
     }
@@ -7618,52 +7146,6 @@ export const generatedExercises: Exercise[] = [
     }
   },
   {
-    "id": "fdb-dumbbell-shoulder-press",
-    "name": "Desenvolvimento de Ombros com Halteres",
-    "muscleGroups": [
-      "ombros",
-      "triceps"
-    ],
-    "equipment": "Halter",
-    "environment": [
-      "academia",
-      "casa"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Shoulder_Press/0.jpg",
-    "difficulty": "intermediário",
-    "muscleHighlights": [
-      {
-        "pathId": "deltoide-anterior",
-        "role": "alvo"
-      },
-      {
-        "pathId": "triceps",
-        "role": "sinergista"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Shoulder_Press/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Shoulder_Press/1.jpg"
-    },
-    "explanation": {
-      "simples": "Sentado em um banco com apoio para as costas, segure um halter em cada mão, apoiados verticalmente sobre as coxas. Levante os halteres até a altura dos ombros, um de cada vez, usando as coxas para auxiliar no movimento.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: ombros. Músculos secundários: triceps.",
-        "vetorForca": "A força é aplicada em elevação ou rotação do braço a partir da articulação do ombro — priorize amplitude controlada sobre carga excessiva.",
-        "amplitude": "Siga a execução completa: Sentado em um banco com apoio para as costas, segure um halter em cada mão, apoiados verticalmente sobre as coxas. → Levante os halteres até a altura dos ombros, um de cada vez, usando as coxas para auxiliar no movimento. → Gire os pulsos para que as palmas das mãos fiquem voltadas para frente. Esta é sua posição inicial. → Expire e empurre os halteres para cima até que se toquem no topo. → Após uma breve pausa na posição contraída, inspire e abaixe os pesos lentamente até a posição inicial. → Repita para o número de repetições recomendado."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Halter"
-      ],
-      "errosComuns": [
-        "Evite elevar os ombros junto com o movimento (encolhendo o trapézio) em vez de isolar o deltoide."
-      ],
-      "substitutos": []
-    }
-  },
-  {
     "id": "fdb-dumbbell-shrug",
     "name": "Encolhimento de Ombros com Halteres",
     "muscleGroups": [
@@ -8195,8 +7677,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Extended_Range_One-Arm_Kettlebell_Floor_Press/0.jpg",
     "difficulty": "iniciante",
@@ -9060,8 +8541,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Front_Squats_With_Two_Kettlebells/0.jpg",
     "difficulty": "intermediário",
@@ -9250,8 +8730,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Goblet_Squat/0.jpg",
     "difficulty": "iniciante",
@@ -11066,8 +10545,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Arnold_Press/0.jpg",
     "difficulty": "intermediário",
@@ -11116,8 +10594,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Dead_Clean/0.jpg",
     "difficulty": "intermediário",
@@ -11179,8 +10656,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Figure_8/0.jpg",
     "difficulty": "intermediário",
@@ -11232,8 +10708,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Hang_Clean/0.jpg",
     "difficulty": "intermediário",
@@ -11295,8 +10770,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_One-Legged_Deadlift/0.jpg",
     "difficulty": "intermediário",
@@ -11347,8 +10821,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Pass_Between_The_Legs/0.jpg",
     "difficulty": "intermediário",
@@ -11401,8 +10874,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Pirate_Ships/0.jpg",
     "difficulty": "iniciante",
@@ -11450,8 +10922,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Pistol_Squat/0.jpg",
     "difficulty": "avançado",
@@ -11508,8 +10979,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Seated_Press/0.jpg",
     "difficulty": "intermediário",
@@ -11554,8 +11024,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Seesaw_Press/0.jpg",
     "difficulty": "intermediário",
@@ -11602,8 +11071,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Sumo_High_Pull/0.jpg",
     "difficulty": "intermediário",
@@ -11661,8 +11129,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Thruster/0.jpg",
     "difficulty": "intermediário",
@@ -11714,8 +11181,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Turkish_Get-Up_Lunge_style/0.jpg",
     "difficulty": "intermediário",
@@ -11776,8 +11242,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Turkish_Get-Up_Squat_style/0.jpg",
     "difficulty": "intermediário",
@@ -11841,8 +11306,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Windmill/0.jpg",
     "difficulty": "intermediário",
@@ -12236,8 +11700,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Leg-Over_Floor_Press/0.jpg",
     "difficulty": "intermediário",
@@ -12273,46 +11736,6 @@ export const generatedExercises: Exercise[] = [
       ],
       "errosComuns": [
         "Evite arquear demais a lombar ou deixar os ombros subirem em direção às orelhas durante o movimento."
-      ],
-      "substitutos": []
-    }
-  },
-  {
-    "id": "fdb-leg-extensions",
-    "name": "Extensão de Pernas",
-    "muscleGroups": [
-      "quadriceps"
-    ],
-    "equipment": "Máquina",
-    "environment": [
-      "academia"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Leg_Extensions/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "quadriceps",
-        "role": "alvo"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Leg_Extensions/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Leg_Extensions/1.jpg"
-    },
-    "explanation": {
-      "simples": "Para este exercício, você precisará usar uma máquina de extensão de pernas. Primeiro, escolha seu peso e sente-se na máquina com as pernas sob a almofada (pés apontados para frente) e as mãos segurando as barras laterais. Esta será sua posição inicial. Dica: Ajuste a almofada par.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: quadriceps.",
-        "vetorForca": "A força é aplicada na extensão do joelho e/ou quadril — mantenha o joelho alinhado com a ponta do pé.",
-        "amplitude": "Siga a execução completa: Para este exercício, você precisará usar uma máquina de extensão de pernas. Primeiro, escolha seu peso e sente-se na máquina com as pernas sob a almofada (pés apontados para frente) e as mãos segurando as barras laterais. Esta será sua posição inicial. Dica: Ajuste a almofada para que fique sobre a parte inferior da perna (logo acima dos pés). Além disso, certifique-se de que as pernas formem um ângulo de 90 graus entre a parte inferior e superior. Se o ângulo for menor que 90 graus, isso significa que o joelho está sobre os dedos, o que cria estresse indevido na articulação do joelho. Se a máquina for assim, procure outra ou apenas certifique-se de parar de descer quando atingir o ângulo de 90 graus. → Usando os quadríceps, estenda as pernas ao máximo enquanto expira. Certifique-se de que o resto do corpo permaneça parado no assento. Faça uma pausa de um segundo na posição contraída. → Lentamente, abaixe o peso de volta à posição original enquanto inspira, garantindo que não ultrapasse o limite de 90 graus. → Repita para o número recomendado de vezes."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Máquina"
-      ],
-      "errosComuns": [
-        "Evite deixar o joelho ultrapassar demais a ponta do pé ou colapsar para dentro."
       ],
       "substitutos": []
     }
@@ -12359,61 +11782,6 @@ export const generatedExercises: Exercise[] = [
       ],
       "errosComuns": [
         "Evite compensar com a lombar em vez de ativar o glúteo como motor principal do movimento."
-      ],
-      "substitutos": []
-    }
-  },
-  {
-    "id": "fdb-leg-press",
-    "name": "Leg Press",
-    "muscleGroups": [
-      "quadriceps",
-      "panturrilha",
-      "gluteos",
-      "posterior"
-    ],
-    "equipment": "Máquina",
-    "environment": [
-      "academia"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Leg_Press/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "quadriceps",
-        "role": "alvo"
-      },
-      {
-        "pathId": "gastrocnemio",
-        "role": "sinergista"
-      },
-      {
-        "pathId": "gluteo-maximo",
-        "role": "sinergista"
-      },
-      {
-        "pathId": "isquiotibiais",
-        "role": "sinergista"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Leg_Press/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Leg_Press/1.jpg"
-    },
-    "explanation": {
-      "simples": "Sente-se na máquina de leg press e posicione os pés na plataforma à sua frente, com uma postura média (largura dos ombros). Abra as travas de segurança e empurre a plataforma até as pernas ficarem quase totalmente estendidas, sem travar os joelhos. O tronco e as pernas devem form.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: quadriceps. Músculos secundários: panturrilha, gluteos, posterior.",
-        "vetorForca": "A força é aplicada na extensão do joelho e/ou quadril — mantenha o joelho alinhado com a ponta do pé.",
-        "amplitude": "Siga a execução completa: Sente-se na máquina de leg press e posicione os pés na plataforma à sua frente, com uma postura média (largura dos ombros). → Abra as travas de segurança e empurre a plataforma até as pernas ficarem quase totalmente estendidas, sem travar os joelhos. O tronco e as pernas devem formar um ângulo de 90 graus. Esta é a posição inicial. → Inspire e abaixe lentamente a plataforma até as coxas e panturrilhas formarem um ângulo de 90 graus. → Empurre principalmente com os calcanhares, usando os quadríceps, para voltar à posição inicial enquanto expira. → Repita para a quantidade recomendada de repetições e trave os pinos de segurança ao terminar."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Máquina"
-      ],
-      "errosComuns": [
-        "Evite deixar o joelho ultrapassar demais a ponta do pé ou colapsar para dentro."
       ],
       "substitutos": []
     }
@@ -12920,60 +12288,6 @@ export const generatedExercises: Exercise[] = [
     }
   },
   {
-    "id": "fdb-low-pulley-row-to-neck",
-    "name": "Remada na Polia Baixa para o Pescoço",
-    "muscleGroups": [
-      "ombros",
-      "biceps",
-      "costas"
-    ],
-    "equipment": "Polia",
-    "environment": [
-      "academia"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Low_Pulley_Row_To_Neck/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "deltoide-anterior",
-        "role": "alvo"
-      },
-      {
-        "pathId": "biceps",
-        "role": "sinergista"
-      },
-      {
-        "pathId": "grande-dorsal",
-        "role": "sinergista"
-      },
-      {
-        "pathId": "trapezio-superior",
-        "role": "sinergista"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Low_Pulley_Row_To_Neck/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Low_Pulley_Row_To_Neck/1.jpg"
-    },
-    "explanation": {
-      "simples": "Sente-se em uma máquina de remada na polia baixa com uma corda. Segure as extremidades da corda com uma pegada pronada (palmas para baixo) e sente-se com as costas retas e os joelhos levemente flexionados. Dica: Mantenha as costas quase verticais e os braços totalmente estendidos.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: ombros. Músculos secundários: biceps, costas.",
-        "vetorForca": "A força é aplicada em elevação ou rotação do braço a partir da articulação do ombro — priorize amplitude controlada sobre carga excessiva.",
-        "amplitude": "Siga a execução completa: Sente-se em uma máquina de remada na polia baixa com uma corda. → Segure as extremidades da corda com uma pegada pronada (palmas para baixo) e sente-se com as costas retas e os joelhos levemente flexionados. Dica: Mantenha as costas quase verticais e os braços totalmente estendidos à frente. Esta será a posição inicial. → Mantendo o torso estacionário, levante os cotovelos e comece a flexioná-los enquanto puxa a corda em direção ao pescoço, expirando. Os braços superiores devem permanecer paralelos ao chão. Dica: Continue até as mãos ficarem quase próximas às orelhas (os antebraços não estarão paralelos ao chão, mas levemente angulados para cima) e os cotovelos afastados dos lados. → Após segurar por um segundo na posição contraída, retorne lentamente à posição inicial inspirando. Dica: O torso não deve se mover em nenhuma parte do movimento. → Repita para a quantidade recomendada de repetições."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Polia"
-      ],
-      "errosComuns": [
-        "Evite elevar os ombros junto com o movimento (encolhendo o trapézio) em vez de isolar o deltoide."
-      ],
-      "substitutos": []
-    }
-  },
-  {
     "id": "fdb-lower-back-smr",
     "name": "Auto-Massagem para Lombar",
     "muscleGroups": [
@@ -13025,8 +12339,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Lunge_Pass_Through/0.jpg",
     "difficulty": "intermediário",
@@ -14564,8 +13877,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Kettlebell_Clean/0.jpg",
     "difficulty": "intermediário",
@@ -14621,8 +13933,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Kettlebell_Clean_and_Jerk/0.jpg",
     "difficulty": "intermediário",
@@ -14663,8 +13974,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Kettlebell_Floor_Press/0.jpg",
     "difficulty": "intermediário",
@@ -14711,8 +14021,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Kettlebell_Jerk/0.jpg",
     "difficulty": "intermediário",
@@ -14765,8 +14074,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Kettlebell_Military_Press_To_The_Side/0.jpg",
     "difficulty": "intermediário",
@@ -14811,8 +14119,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Kettlebell_Para_Press/0.jpg",
     "difficulty": "intermediário",
@@ -14859,8 +14166,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Kettlebell_Push_Press/0.jpg",
     "difficulty": "intermediário",
@@ -14913,8 +14219,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Kettlebell_Row/0.jpg",
     "difficulty": "intermediário",
@@ -14963,8 +14268,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Kettlebell_Snatch/0.jpg",
     "difficulty": "avançado",
@@ -15032,8 +14336,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Kettlebell_Split_Jerk/0.jpg",
     "difficulty": "intermediário",
@@ -15091,8 +14394,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Kettlebell_Split_Snatch/0.jpg",
     "difficulty": "avançado",
@@ -15144,8 +14446,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Kettlebell_Swings/0.jpg",
     "difficulty": "intermediário",
@@ -15251,8 +14552,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Open_Palm_Kettlebell_Clean/0.jpg",
     "difficulty": "intermediário",
@@ -15316,8 +14616,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Overhead_Kettlebell_Squats/0.jpg",
     "difficulty": "avançado",
@@ -15664,51 +14963,6 @@ export const generatedExercises: Exercise[] = [
     }
   },
   {
-    "id": "fdb-one-arm-lat-pulldown",
-    "name": "Pulldown Unilateral com Pegada Pronada",
-    "muscleGroups": [
-      "costas",
-      "biceps"
-    ],
-    "equipment": "Polia",
-    "environment": [
-      "academia"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One_Arm_Lat_Pulldown/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "grande-dorsal",
-        "role": "alvo"
-      },
-      {
-        "pathId": "biceps",
-        "role": "sinergista"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One_Arm_Lat_Pulldown/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One_Arm_Lat_Pulldown/1.jpg"
-    },
-    "explanation": {
-      "simples": "Selecione um peso adequado e ajuste o apoio de joelhos para ajudar a mantê-lo firme. Segure a alavanca com uma pegada pronada (palmas para frente). Esta será a posição inicial. Puxe a alavanca para baixo, aproximando o cotovelo do corpo enquanto flexiona o braço.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: costas. Músculos secundários: biceps.",
-        "vetorForca": "O movimento costuma puxar a carga em direção ao tronco — inicie puxando com as escápulas antes de flexionar o cotovelo.",
-        "amplitude": "Siga a execução completa: Selecione um peso adequado e ajuste o apoio de joelhos para ajudar a mantê-lo firme. Segure a alavanca com uma pegada pronada (palmas para frente). Esta será a posição inicial. → Puxe a alavanca para baixo, aproximando o cotovelo do corpo enquanto flexiona o braço. → Faça uma pausa no ponto mais baixo do movimento e, em seguida, retorne lentamente a alavanca à posição inicial. → Para múltiplas repetições, evite retornar completamente o peso para manter a tensão nos músculos trabalhados."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Polia"
-      ],
-      "errosComuns": [
-        "Evite usar embalo do corpo (cheating) para compensar a falta de força nos braços."
-      ],
-      "substitutos": []
-    }
-  },
-  {
     "id": "fdb-one-arm-pronated-dumbbell-triceps-extension",
     "name": "Extensão de Tríceps Unilateral com Halter em Pegada Pronada",
     "muscleGroups": [
@@ -15857,8 +15111,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Open_Palm_Kettlebell_Clean/0.jpg",
     "difficulty": "avançado",
@@ -16260,47 +15513,6 @@ export const generatedExercises: Exercise[] = [
     }
   },
   {
-    "id": "fdb-plank",
-    "name": "Prancha",
-    "muscleGroups": [
-      "abdomen"
-    ],
-    "equipment": "Peso Corporal",
-    "environment": [
-      "academia",
-      "casa"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Plank/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "reto-abdominal",
-        "role": "alvo"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Plank/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Plank/1.jpg"
-    },
-    "explanation": {
-      "simples": "Fique em posição prona, apoiado nos dedos dos pés e antebraços, com os braços alinhados aos ombros. Mantenha o corpo reto pelo maior tempo possível. Para aumentar a dificuldade, levante um braço ou perna.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: abdomen.",
-        "vetorForca": "A força atua na flexão do tronco ou estabilização da coluna — priorize contração consciente em vez de velocidade.",
-        "amplitude": "Siga a execução completa: Fique em posição prona, apoiado nos dedos dos pés e antebraços, com os braços alinhados aos ombros. → Mantenha o corpo reto pelo maior tempo possível. Para aumentar a dificuldade, levante um braço ou perna."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Peso Corporal"
-      ],
-      "errosComuns": [
-        "Evite puxar o pescoço com as mãos em vez de usar o abdômen para iniciar o movimento."
-      ],
-      "substitutos": []
-    }
-  },
-  {
     "id": "fdb-plyo-kettlebell-pushups",
     "name": "Flexões Plyométricas com Kettlebell",
     "muscleGroups": [
@@ -16310,8 +15522,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Plyo_Kettlebell_Pushups/0.jpg",
     "difficulty": "avançado",
@@ -16517,47 +15728,6 @@ export const generatedExercises: Exercise[] = [
     }
   },
   {
-    "id": "fdb-preacher-hammer-dumbbell-curl",
-    "name": "Rosca Martelo no Banco Scott",
-    "muscleGroups": [
-      "biceps"
-    ],
-    "equipment": "Halter",
-    "environment": [
-      "academia",
-      "casa"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Preacher_Hammer_Dumbbell_Curl/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "biceps",
-        "role": "alvo"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Preacher_Hammer_Dumbbell_Curl/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Preacher_Hammer_Dumbbell_Curl/1.jpg"
-    },
-    "explanation": {
-      "simples": "Apoie a parte superior dos braços no banco Scott, segurando um halter em cada mão com as palmas voltadas uma para a outra (pegada neutra). Inspire e abaixe os halteres lentamente até o braço ficar estendido e o bíceps alongado.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: biceps.",
-        "vetorForca": "A força ocorre na flexão do cotovelo, com o antebraço se aproximando do braço — mantenha o cotovelo fixo ao lado do corpo.",
-        "amplitude": "Siga a execução completa: Apoie a parte superior dos braços no banco Scott, segurando um halter em cada mão com as palmas voltadas uma para a outra (pegada neutra). → Inspire e abaixe os halteres lentamente até o braço ficar estendido e o bíceps alongado. → Exale e use o bíceps para levantar o peso até a contração total, halteres na altura dos ombros. → Mantenha a contração por um segundo e repita pelo número recomendado de repetições."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Halter"
-      ],
-      "errosComuns": [
-        "Evite balançar o tronco para \"ajudar\" a subir o peso — isso tira a tensão do bíceps."
-      ],
-      "substitutos": []
-    }
-  },
-  {
     "id": "fdb-press-sit-up",
     "name": "Abdominal com Desenvolvimento",
     "muscleGroups": [
@@ -16658,108 +15828,6 @@ export const generatedExercises: Exercise[] = [
       ],
       "errosComuns": [
         "Evite compensar com a lombar em vez de ativar o glúteo como motor principal do movimento."
-      ],
-      "substitutos": []
-    }
-  },
-  {
-    "id": "fdb-pullups",
-    "name": "Barra Fixa",
-    "muscleGroups": [
-      "costas",
-      "biceps"
-    ],
-    "equipment": "Peso Corporal",
-    "environment": [
-      "academia",
-      "casa"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Pullups/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "grande-dorsal",
-        "role": "alvo"
-      },
-      {
-        "pathId": "biceps",
-        "role": "sinergista"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Pullups/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Pullups/1.jpg"
-    },
-    "explanation": {
-      "simples": "Segure a barra com as palmas para frente na pegada escolhida: larga (mãos além dos ombros), média (na largura dos ombros) ou fechada (mais próxima). Com braços estendidos, incline o tronco para trás cerca de 30 graus, arqueando levemente as costas e projetando o peito. Esta é a p.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: costas. Músculos secundários: biceps.",
-        "vetorForca": "O movimento costuma puxar a carga em direção ao tronco — inicie puxando com as escápulas antes de flexionar o cotovelo.",
-        "amplitude": "Siga a execução completa: Segure a barra com as palmas para frente na pegada escolhida: larga (mãos além dos ombros), média (na largura dos ombros) ou fechada (mais próxima). → Com braços estendidos, incline o tronco para trás cerca de 30 graus, arqueando levemente as costas e projetando o peito. Esta é a posição inicial. → Puxe o tronco para cima até a barra tocar o peito, puxando ombros e braços para baixo e para trás. Exale. Contraia as costas no topo; mantenha o tronco estático, apenas os braços se movem. → Após um segundo, inspire e abaixe-se lentamente até os braços ficarem estendidos e os dorsais alongados. → Repita pelo número recomendado de repetições."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Peso Corporal"
-      ],
-      "errosComuns": [
-        "Evite usar embalo do corpo (cheating) para compensar a falta de força nos braços."
-      ],
-      "substitutos": []
-    }
-  },
-  {
-    "id": "fdb-push-up-wide",
-    "name": "Flexão com Apoio Ampla",
-    "muscleGroups": [
-      "peito",
-      "abdomen",
-      "ombros",
-      "triceps"
-    ],
-    "equipment": "Peso Corporal",
-    "environment": [
-      "academia",
-      "casa"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Push-Up_Wide/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "peitoral-maior",
-        "role": "alvo"
-      },
-      {
-        "pathId": "reto-abdominal",
-        "role": "sinergista"
-      },
-      {
-        "pathId": "deltoide-anterior",
-        "role": "sinergista"
-      },
-      {
-        "pathId": "triceps",
-        "role": "sinergista"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Push-Up_Wide/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Push-Up_Wide/1.jpg"
-    },
-    "explanation": {
-      "simples": "Com as mãos bem afastadas, apoie o corpo na ponta dos pés e nas mãos em posição de prancha. Mantenha os cotovelos estendidos e o corpo reto, sem deixar os quadris caírem. Esta é a posição inicial. Inspire e flexione os cotovelos, abaixando o peito em direção ao chão.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: peito. Músculos secundários: abdomen, ombros, triceps.",
-        "vetorForca": "De forma geral, a força é aplicada perpendicular ao tronco, empurrando a carga para longe do peito — controle a descida para maximizar o trabalho muscular.",
-        "amplitude": "Siga a execução completa: Com as mãos bem afastadas, apoie o corpo na ponta dos pés e nas mãos em posição de prancha. Mantenha os cotovelos estendidos e o corpo reto, sem deixar os quadris caírem. Esta é a posição inicial. → Inspire e flexione os cotovelos, abaixando o peito em direção ao chão. → Use os músculos peitorais para empurrar o corpo de volta à posição inicial, estendendo os cotovelos. Expire durante esse movimento. → Após uma pausa na posição contraída, repita o movimento pelo número de repetições prescrito."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Peso Corporal"
-      ],
-      "errosComuns": [
-        "Evite arquear demais a lombar ou deixar os ombros subirem em direção às orelhas durante o movimento."
       ],
       "substitutos": []
     }
@@ -18013,46 +17081,6 @@ export const generatedExercises: Exercise[] = [
     }
   },
   {
-    "id": "fdb-seated-calf-raise",
-    "name": "Elevação de Panturrilha Sentada",
-    "muscleGroups": [
-      "panturrilha"
-    ],
-    "equipment": "Máquina",
-    "environment": [
-      "academia"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Seated_Calf_Raise/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "gastrocnemio",
-        "role": "alvo"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Seated_Calf_Raise/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Seated_Calf_Raise/1.jpg"
-    },
-    "explanation": {
-      "simples": "Sente-se na máquina e coloque a ponta dos pés na plataforma, com os calcanhares para fora. Escolha a posição dos pés (para frente, para dentro ou para fora). Apoie as coxas sob a almofada da alavanca e ajuste-a conforme a altura. Segure a almofada para evitar que escorregue.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: panturrilha.",
-        "vetorForca": "O movimento é de flexão plantar do tornozelo — priorize amplitude completa em vez de repetições rápidas e curtas.",
-        "amplitude": "Siga a execução completa: Sente-se na máquina e coloque a ponta dos pés na plataforma, com os calcanhares para fora. Escolha a posição dos pés (para frente, para dentro ou para fora). → Apoie as coxas sob a almofada da alavanca e ajuste-a conforme a altura. Segure a almofada para evitar que escorregue. → Levante a alavanca empurrando os calcanhares para cima e solte a trava de segurança. Esta é a posição inicial. → Abaixe os calcanhares flexionando os tornozelos até alongar totalmente as panturrilhas. Inspire. → Eleve os calcanhares estendendo os tornozelos o máximo possível, contraindo as panturrilhas. Expire e segure a contração por um segundo. → Repita pelo número recomendado de repetições."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Máquina"
-      ],
-      "errosComuns": [
-        "Evite \"quicar\" no fundo do movimento, perdendo o controle e a tensão muscular."
-      ],
-      "substitutos": []
-    }
-  },
-  {
     "id": "fdb-seated-close-grip-concentration-barbell-curl",
     "name": "Rosca Concentrada com Barra em Pegada Fechada Sentado",
     "muscleGroups": [
@@ -18339,46 +17367,6 @@ export const generatedExercises: Exercise[] = [
       ],
       "errosComuns": [
         "Evite puxar o pescoço com as mãos em vez de usar o abdômen para iniciar o movimento."
-      ],
-      "substitutos": []
-    }
-  },
-  {
-    "id": "fdb-seated-leg-curl",
-    "name": "Cadeira Flexora Sentada",
-    "muscleGroups": [
-      "posterior"
-    ],
-    "equipment": "Máquina",
-    "environment": [
-      "academia"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Seated_Leg_Curl/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "isquiotibiais",
-        "role": "alvo"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Seated_Leg_Curl/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Seated_Leg_Curl/1.jpg"
-    },
-    "explanation": {
-      "simples": "Ajuste a alavanca da máquina para sua altura e sente-se com as costas apoiadas no encosto. Coloque a parte de trás da perna no apoio acolchoado e fixe a almofada nas coxas. Segure as alças laterais com as pernas estendidas. Esta é a posição inicial.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: posterior.",
-        "vetorForca": "O movimento trabalha a flexão do joelho e/ou extensão do quadril — priorize controle na fase excêntrica (alongamento).",
-        "amplitude": "Siga a execução completa: Ajuste a alavanca da máquina para sua altura e sente-se com as costas apoiadas no encosto. → Coloque a parte de trás da perna no apoio acolchoado e fixe a almofada nas coxas. Segure as alças laterais com as pernas estendidas. Esta é a posição inicial. → Flexione os joelhos para puxar a alavanca em direção às coxas, expirando. Mantenha o tronco parado e segure a contração por um segundo. → Volte lentamente à posição inicial, inspirando. → Repita para as repetições recomendadas."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Máquina"
-      ],
-      "errosComuns": [
-        "Evite hiperextender a lombar para compensar a falta de mobilidade de quadril."
       ],
       "substitutos": []
     }
@@ -18673,47 +17661,6 @@ export const generatedExercises: Exercise[] = [
       ],
       "errosComuns": [
         "Evite elevar os ombros junto com o movimento (encolhendo o trapézio) em vez de isolar o deltoide."
-      ],
-      "substitutos": []
-    }
-  },
-  {
-    "id": "fdb-seated-triceps-press",
-    "name": "Tríceps Francês Sentado",
-    "muscleGroups": [
-      "triceps"
-    ],
-    "equipment": "Halter",
-    "environment": [
-      "academia",
-      "casa"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Seated_Triceps_Press/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "triceps",
-        "role": "alvo"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Seated_Triceps_Press/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Seated_Triceps_Press/1.jpg"
-    },
-    "explanation": {
-      "simples": "Sente-se em um banco com apoio para as costas e segure um halter com as duas mãos acima da cabeça, com os braços estendidos. Dica: É melhor que alguém lhe entregue o halter, especialmente se for muito pesado. A resistência deve repousar nas palmas das mãos, com os polegares ao re.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: triceps.",
-        "vetorForca": "A força ocorre na extensão do cotovelo — mantenha o braço estável e evite abrir o cotovelo para os lados.",
-        "amplitude": "Siga a execução completa: Sente-se em um banco com apoio para as costas e segure um halter com as duas mãos acima da cabeça, com os braços estendidos. Dica: É melhor que alguém lhe entregue o halter, especialmente se for muito pesado. A resistência deve repousar nas palmas das mãos, com os polegares ao redor. As palmas devem estar viradas para dentro. Esta será a posição inicial. → Mantendo os braços superiores próximos à cabeça (cotovelos para dentro) e perpendiculares ao chão, abaixe a resistência em um movimento semicircular atrás da cabeça até os antebraços tocarem os bíceps. Dica: Os braços superiores devem permanecer imóveis e apenas os antebraços devem se mover. Inspire ao executar este passo. → Volte à posição inicial usando o tríceps para levantar o halter. Expire ao executar este passo. → Repita para a quantidade recomendada de repetições."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Halter"
-      ],
-      "errosComuns": [
-        "Evite deixar o cotovelo se afastar do corpo, o que reduz o isolamento do tríceps."
       ],
       "substitutos": []
     }
@@ -20273,61 +19220,6 @@ export const generatedExercises: Exercise[] = [
     }
   },
   {
-    "id": "fdb-smith-single-leg-split-squat",
-    "name": "Agachamento Búlgaro no Smith",
-    "muscleGroups": [
-      "quadriceps",
-      "panturrilha",
-      "gluteos",
-      "posterior"
-    ],
-    "equipment": "Máquina",
-    "environment": [
-      "academia"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Smith_Single-Leg_Split_Squat/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "quadriceps",
-        "role": "alvo"
-      },
-      {
-        "pathId": "gastrocnemio",
-        "role": "sinergista"
-      },
-      {
-        "pathId": "gluteo-maximo",
-        "role": "sinergista"
-      },
-      {
-        "pathId": "isquiotibiais",
-        "role": "sinergista"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Smith_Single-Leg_Split_Squat/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Smith_Single-Leg_Split_Squat/1.jpg"
-    },
-    "explanation": {
-      "simples": "Posicione um banco plano atrás da máquina Smith. Ajuste a barra para sua altura. Com a barra carregada, posicione-se sob ela, apoiando-a nas costas dos ombros. Segure a barra com as duas mãos nas laterais, destrave-a e levante-a do suporte empurrando com as pernas e endireitando .",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: quadriceps. Músculos secundários: panturrilha, gluteos, posterior.",
-        "vetorForca": "A força é aplicada na extensão do joelho e/ou quadril — mantenha o joelho alinhado com a ponta do pé.",
-        "amplitude": "Siga a execução completa: Posicione um banco plano atrás da máquina Smith. Ajuste a barra para sua altura. Com a barra carregada, posicione-se sob ela, apoiando-a nas costas dos ombros. → Segure a barra com as duas mãos nas laterais, destrave-a e levante-a do suporte empurrando com as pernas e endireitando o tronco. → Posicione uma perna levemente para frente sob a barra e estenda a outra para trás, apoiando o peito do pé no banco. Esta é a posição inicial. → Abaixe a barra lentamente dobrando o joelho da perna da frente, mantendo a postura reta e a cabeça erguida. Desça até a coxa ficar abaixo do paralelo com o chão. Inspire durante esse movimento. Dica: O joelho não deve passar a linha dos dedos do pé. → Levante a barra enquanto expira, empurrando o chão principalmente com o calcanhar da perna da frente e estendendo a perna até voltar à posição inicial. → Repita para a quantidade recomendada de repetições. → Troque de perna e repita o movimento."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Máquina"
-      ],
-      "errosComuns": [
-        "Evite deixar o joelho ultrapassar demais a ponta do pé ou colapsar para dentro."
-      ],
-      "substitutos": []
-    }
-  },
-  {
     "id": "fdb-snatch-pull",
     "name": "Puxada de Arranco",
     "muscleGroups": [
@@ -21311,46 +20203,6 @@ export const generatedExercises: Exercise[] = [
       ],
       "errosComuns": [
         "Evite puxar o pescoço com as mãos em vez de usar o abdômen para iniciar o movimento."
-      ],
-      "substitutos": []
-    }
-  },
-  {
-    "id": "fdb-standing-calf-raises",
-    "name": "Elevação de Panturrilha em Pé",
-    "muscleGroups": [
-      "panturrilha"
-    ],
-    "equipment": "Máquina",
-    "environment": [
-      "academia"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Calf_Raises/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "gastrocnemio",
-        "role": "alvo"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Calf_Raises/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Calf_Raises/1.jpg"
-    },
-    "explanation": {
-      "simples": "Ajuste a alavanca acolchoada da máquina de panturrilha para sua altura. Posicione os ombros sob as almofadas, com as pontas dos pés para frente (ou em outras posições, se preferir). As pontas dos pés devem ficar no bloco, com os calcanhares para fora. Empurre a alavanca para cima.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: panturrilha.",
-        "vetorForca": "O movimento é de flexão plantar do tornozelo — priorize amplitude completa em vez de repetições rápidas e curtas.",
-        "amplitude": "Siga a execução completa: Ajuste a alavanca acolchoada da máquina de panturrilha para sua altura. → Posicione os ombros sob as almofadas, com as pontas dos pés para frente (ou em outras posições, se preferir). As pontas dos pés devem ficar no bloco, com os calcanhares para fora. Empurre a alavanca para cima, estendendo quadris e joelhos até ficar ereto, mantendo os joelhos levemente flexionados. → Eleve os calcanhares ao expirar, estendendo os tornozelos o máximo possível e contraindo a panturrilha. Mantenha os joelhos fixos, sem dobrar. Segure a contração por um segundo. → Volte lentamente à posição inicial ao inspirar, abaixando os calcanhares até alongar as panturrilhas. → Repita pelo número recomendado de repetições."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Máquina"
-      ],
-      "errosComuns": [
-        "Evite \"quicar\" no fundo do movimento, perdendo o controle e a tensão muscular."
       ],
       "substitutos": []
     }
@@ -22741,57 +21593,6 @@ export const generatedExercises: Exercise[] = [
     }
   },
   {
-    "id": "fdb-superman",
-    "name": "Super-Homem",
-    "muscleGroups": [
-      "lombar",
-      "gluteos",
-      "posterior"
-    ],
-    "equipment": "Peso Corporal",
-    "environment": [
-      "academia",
-      "casa"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Superman/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "eretores-espinha",
-        "role": "alvo"
-      },
-      {
-        "pathId": "gluteo-maximo",
-        "role": "sinergista"
-      },
-      {
-        "pathId": "isquiotibiais",
-        "role": "sinergista"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Superman/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Superman/1.jpg"
-    },
-    "explanation": {
-      "simples": "Deite-se de bruços no chão ou no colchonete, com os braços totalmente estendidos à frente. Esta é a posição inicial. Simultaneamente, levante os braços, pernas e peito do chão e mantenha a contração por 2 segundos. Dica: Contraia a lombar para melhores resultados e expire durante.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: lombar. Músculos secundários: gluteos, posterior.",
-        "vetorForca": "O movimento trabalha extensão ou estabilização da coluna — mantenha a coluna em posição neutra durante toda a execução.",
-        "amplitude": "Siga a execução completa: Deite-se de bruços no chão ou no colchonete, com os braços totalmente estendidos à frente. Esta é a posição inicial. → Simultaneamente, levante os braços, pernas e peito do chão e mantenha a contração por 2 segundos. Dica: Contraia a lombar para melhores resultados e expire durante o movimento. Na posição contraída, você deve parecer o Super-Homem voando. → Lentamente, abaixe os braços, pernas e peito de volta à posição inicial enquanto inspira. → Repita conforme o número de repetições indicado no seu programa."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Peso Corporal"
-      ],
-      "errosComuns": [
-        "Evite arredondar excessivamente a coluna sob carga."
-      ],
-      "substitutos": []
-    }
-  },
-  {
     "id": "fdb-t-bar-row-with-handle",
     "name": "Remada em T com Pegador",
     "muscleGroups": [
@@ -22883,46 +21684,6 @@ export const generatedExercises: Exercise[] = [
       ],
       "errosComuns": [
         "Evite deixar o cotovelo se afastar do corpo, o que reduz o isolamento do tríceps."
-      ],
-      "substitutos": []
-    }
-  },
-  {
-    "id": "fdb-thigh-abductor",
-    "name": "Abdutor de Coxas",
-    "muscleGroups": [
-      "gluteos"
-    ],
-    "equipment": "Máquina",
-    "environment": [
-      "academia"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Thigh_Abductor/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "gluteo-maximo",
-        "role": "alvo"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Thigh_Abductor/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Thigh_Abductor/1.jpg"
-    },
-    "explanation": {
-      "simples": "Sente-se na máquina de abdutor e selecione um peso confortável. Posicione as pernas corretamente e segure as alças laterais. O tronco deve ficar imóvel. Esta é a posição inicial. Pressione lentamente contra a máquina com as pernas para afastá-las, expirando.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: gluteos.",
-        "vetorForca": "A força é aplicada na extensão do quadril — contraia o glúteo no topo do movimento em vez de usar apenas a lombar.",
-        "amplitude": "Siga a execução completa: Sente-se na máquina de abdutor e selecione um peso confortável. Posicione as pernas corretamente e segure as alças laterais. O tronco deve ficar imóvel. Esta é a posição inicial. → Pressione lentamente contra a máquina com as pernas para afastá-las, expirando. → Sinta a contração por um segundo e retorne as pernas à posição inicial, inspirando. Mantenha o tronco imóvel para evitar lesões. → Repita pelo número de repetições recomendado."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Máquina"
-      ],
-      "errosComuns": [
-        "Evite compensar com a lombar em vez de ativar o glúteo como motor principal do movimento."
       ],
       "substitutos": []
     }
@@ -23099,46 +21860,6 @@ export const generatedExercises: Exercise[] = [
     }
   },
   {
-    "id": "fdb-triceps-pushdown-rope-attachment",
-    "name": "Tríceps Pulley com Corda",
-    "muscleGroups": [
-      "triceps"
-    ],
-    "equipment": "Polia",
-    "environment": [
-      "academia"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Triceps_Pushdown_-_Rope_Attachment/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "triceps",
-        "role": "alvo"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Triceps_Pushdown_-_Rope_Attachment/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Triceps_Pushdown_-_Rope_Attachment/1.jpg"
-    },
-    "explanation": {
-      "simples": "Prenda uma corda em uma polia alta e segure com pegada neutra (palmas voltadas uma para a outra). Fique em pé com o tronco reto e leve uma pequena inclinação para frente. Mantenha os braços superiores próximos ao corpo e perpendiculares ao chão, com os antebraços apontando para a.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: triceps.",
-        "vetorForca": "A força ocorre na extensão do cotovelo — mantenha o braço estável e evite abrir o cotovelo para os lados.",
-        "amplitude": "Siga a execução completa: Prenda uma corda em uma polia alta e segure com pegada neutra (palmas voltadas uma para a outra). → Fique em pé com o tronco reto e leve uma pequena inclinação para frente. Mantenha os braços superiores próximos ao corpo e perpendiculares ao chão, com os antebraços apontando para a polia. Esta é a posição inicial. → Use o tríceps para puxar a corda para baixo, levando cada lado da corda para as laterais das coxas, até os braços estarem totalmente estendidos. Os braços superiores devem permanecer imóveis; apenas os antebraços se movem. Expire ao fazer este movimento. → Após segurar por um segundo na posição contraída, levante a corda lentamente à posição inicial. Inspire ao fazer este passo. → Repita pelo número de repetições recomendado."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Polia"
-      ],
-      "errosComuns": [
-        "Evite deixar o cotovelo se afastar do corpo, o que reduz o isolamento do tríceps."
-      ],
-      "substitutos": []
-    }
-  },
-  {
     "id": "fdb-triceps-pushdown-v-bar-attachment",
     "name": "Tríceps Pulley com Barra V",
     "muscleGroups": [
@@ -23272,8 +21993,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Two-Arm_Kettlebell_Clean/0.jpg",
     "difficulty": "intermediário",
@@ -23336,8 +22056,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Two-Arm_Kettlebell_Jerk/0.jpg",
     "difficulty": "intermediário",
@@ -23390,8 +22109,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Two-Arm_Kettlebell_Military_Press/0.jpg",
     "difficulty": "intermediário",
@@ -23436,8 +22154,7 @@ export const generatedExercises: Exercise[] = [
     ],
     "equipment": "Kettlebell",
     "environment": [
-      "academia",
-      "casa"
+      "academia"
     ],
     "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Two-Arm_Kettlebell_Row/0.jpg",
     "difficulty": "intermediário",
@@ -23519,50 +22236,6 @@ export const generatedExercises: Exercise[] = [
       ],
       "errosComuns": [
         "Evite usar embalo do corpo (cheating) para compensar a falta de força nos braços."
-      ],
-      "substitutos": []
-    }
-  },
-  {
-    "id": "fdb-upright-barbell-row",
-    "name": "Remada Alta com Barra",
-    "muscleGroups": [
-      "ombros"
-    ],
-    "equipment": "Barra",
-    "environment": [
-      "academia"
-    ],
-    "thumbnail": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Upright_Barbell_Row/0.jpg",
-    "difficulty": "iniciante",
-    "muscleHighlights": [
-      {
-        "pathId": "deltoide-anterior",
-        "role": "alvo"
-      },
-      {
-        "pathId": "trapezio-superior",
-        "role": "sinergista"
-      }
-    ],
-    "media": {
-      "photoStart": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Upright_Barbell_Row/0.jpg",
-      "photoEnd": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Upright_Barbell_Row/1.jpg"
-    },
-    "explanation": {
-      "simples": "Segure uma barra com pegada pronada, mãos ligeiramente mais próximas que a largura dos ombros. Braços estendidos, barra sobre as coxas. Eleve a barra puxando os cotovelos para cima e para os lados, mantendo-a próxima ao corpo até quase tocar o queixo.",
-      "biomecanica": {
-        "articulacoes": "Músculo alvo: ombros.",
-        "vetorForca": "A força é aplicada em elevação ou rotação do braço a partir da articulação do ombro — priorize amplitude controlada sobre carga excessiva.",
-        "amplitude": "Siga a execução completa: Segure uma barra com pegada pronada, mãos ligeiramente mais próximas que a largura dos ombros. Braços estendidos, barra sobre as coxas. → Eleve a barra puxando os cotovelos para cima e para os lados, mantendo-a próxima ao corpo até quase tocar o queixo. → Abaixe a barra lentamente e repita."
-      }
-    },
-    "fichaTecnica": {
-      "equipamentosNecessarios": [
-        "Barra"
-      ],
-      "errosComuns": [
-        "Evite elevar os ombros junto com o movimento (encolhendo o trapézio) em vez de isolar o deltoide."
       ],
       "substitutos": []
     }

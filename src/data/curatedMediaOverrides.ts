@@ -1,32 +1,21 @@
 /**
  * curatedMediaOverrides.ts
  * ------------------------------------------------------------------------
- * 44 dos 46 exercícios curados (src/data/exercises.ts) têm aqui uma foto
- * real do free-exercise-db. A maioria é o exercício exato; alguns são a
- * melhor variação disponível no dataset — esses ficam marcados com
- * `aproximado` (mostrado como aviso na tela do exercício), pra ser
- * transparente que o equipamento na foto pode diferir um pouco do texto.
+ * 42 dos 46 exercícios curados (src/data/exercises.ts) têm
+ * aqui uma foto real do free-exercise-db (checada uma a uma, sem
+ * duplicar foto de nenhum outro exercício do catálogo — ver histórico
+ * de correções no changelog do projeto).
  *
- * Os 2 que ainda não aparecem aqui (crucifixo-maquina,
- * mobilidade-quadril-90-90) usam uma ilustração própria em vez de foto
- * — ver illustratedMedia.tsx. Já tentei achar foto real pros dois:
- * pro crucifixo só existe no banco a versão invertida (trabalha as
- * costas, não o peito); pro 90/90 só existe um alongamento de
- * isquiotibiais deitado, não a mobilidade de quadril sentada.
- *
- * Aplicado em src/data/exercises.ts: cada exercício curado cujo id
- * aparecer aqui tem thumbnail/media sobrescritos por essa foto real.
+ * Os que ainda não aparecem aqui (crucifixo-maquina,
+ * mobilidade-quadril-90-90) usam ilustração própria — illustratedMedia.tsx.
  */
 export interface CuratedMediaOverride {
   photoStart: string
   photoEnd: string
-  /** Se definido, mostra um aviso: a foto é da variação mais próxima disponível, não do exercício exato. */
   aproximado?: string
 }
 
 export const curatedMediaOverrides: Record<string, CuratedMediaOverride> = {
-  superman: { photoStart: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Superman/0.jpg', photoEnd: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Superman/1.jpg', aproximado: undefined },
-  'alongamento-dinamico-ombro': { photoStart: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Arm_Circles/0.jpg', photoEnd: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Arm_Circles/1.jpg', aproximado: undefined },
   'abdominal-bicicleta': { photoStart: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Air_Bike/0.jpg', photoEnd: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Air_Bike/1.jpg', aproximado: undefined },
   'abdominal-supra': { photoStart: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/3_4_Sit-Up/0.jpg', photoEnd: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/3_4_Sit-Up/1.jpg', aproximado: undefined },
   'agachamento-bulgaro': { photoStart: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Smith_Single-Leg_Split_Squat/0.jpg', photoEnd: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Smith_Single-Leg_Split_Squat/1.jpg', aproximado: 'a imagem mostra a versão na máquina Smith; com halteres o movimento é idêntico' },
@@ -37,7 +26,7 @@ export const curatedMediaOverrides: Record<string, CuratedMediaOverride> = {
   'barra-fixa-assistida': { photoStart: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Band_Assisted_Pull-Up/0.jpg', photoEnd: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Band_Assisted_Pull-Up/1.jpg', aproximado: undefined },
   'cadeira-abdutora': { photoStart: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Thigh_Abductor/0.jpg', photoEnd: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Thigh_Abductor/1.jpg', aproximado: undefined },
   'cadeira-extensora': { photoStart: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Leg_Extensions/0.jpg', photoEnd: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Leg_Extensions/1.jpg', aproximado: undefined },
-  'cadeira-flexora': { photoStart: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Lying_Leg_Curls/0.jpg', photoEnd: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Lying_Leg_Curls/1.jpg', aproximado: undefined },
+  'cadeira-flexora': { photoStart: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Seated_Leg_Curl/0.jpg', photoEnd: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Seated_Leg_Curl/1.jpg', aproximado: undefined },
   'crossover-polia': { photoStart: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cable_Crossover/0.jpg', photoEnd: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cable_Crossover/1.jpg', aproximado: undefined },
   'desenvolvimento-halteres': { photoStart: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Shoulder_Press/0.jpg', photoEnd: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Shoulder_Press/1.jpg', aproximado: undefined },
   'desenvolvimento-militar-barra': { photoStart: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Shoulder_Press/0.jpg', photoEnd: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Shoulder_Press/1.jpg', aproximado: undefined },
