@@ -46,6 +46,7 @@ export function CategoryCard({ group }: { group: MuscleGroup }) {
           <img
             src={photo}
             alt={group.name}
+            loading="lazy"
             className="pointer-events-none absolute inset-0 h-full w-full object-cover"
           />
           {/* Gradiente escuro por cima, só para o texto ficar legível */}

@@ -15,6 +15,7 @@ export function Avatar({ user, size = 36 }: { user: AuthUser | null; size?: numb
       <img
         src={user.avatarUrl}
         alt={user.name}
+        loading="lazy"
         style={style}
         className="rounded-full border border-bio-line object-cover"
       />
