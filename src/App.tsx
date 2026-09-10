@@ -29,7 +29,7 @@ export default function App() {
   return (
     <ErrorBoundary>
       <AuthProvider>
-        <BrowserRouter>
+        <BrowserRouter basename="/biofit">
           <MobileFrame>
             <Suspense fallback={<RouteFallback />}>
               <Routes>

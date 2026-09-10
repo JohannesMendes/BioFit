@@ -1,0 +1,69 @@
+name: Build APK de teste
+
+# Roda automaticamente a cada push na main, e também pode ser disparado
+# manualmente pela aba "Actions" no GitHub (botão "Run workflow").
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write # necessário para criar o Release
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Configurar Java (necessário para o Gradle/Android)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Buildar o app web (Vite)
+        run: npm run build
+
+      - name: Garantir que a plataforma Android existe
+        run: |
+          if [ ! -d "android" ]; then
+            npx cap add android
+          fi
+          npx cap sync android
+
+      - name: Dar permissão de execução ao Gradle
+        run: chmod +x android/gradlew
+
+      - name: Compilar o APK de debug
+        run: cd android && ./gradlew assembleDebug
+
+      - name: Renomear o APK com a versão/commit
+        run: |
+          mkdir -p artifacts
+          cp android/app/build/outputs/apk/debug/app-debug.apk \
+             artifacts/biofit-${{ github.run_number }}.apk
+
+      - name: Publicar como Release no GitHub
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.run_number }}
+          name: BioFit build #${{ github.run_number }}
+          body: |
+            APK de teste gerado automaticamente a partir do commit
+            ${{ github.sha }}.
+
+            Baixe o arquivo `.apk` abaixo direto no celular e instale
+            (pode ser necessário permitir "instalar apps de fontes
+            desconhecidas" nas configurações do Android na primeira vez).
+          files: artifacts/*.apk
