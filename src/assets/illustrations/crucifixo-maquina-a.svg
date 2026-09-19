@@ -1,13 +1,20 @@
 <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
   <rect width="300" height="300" fill="#141614"/>
-  <rect x="130" y="60" width="40" height="180" rx="8" fill="#1D201D" stroke="#2A2E2A" stroke-width="2"/>
+  <!-- assento -->
+  <rect x="120" y="190" width="60" height="18" rx="4" fill="#1D201D" stroke="#2A2E2A" stroke-width="2"/>
+  <rect x="140" y="205" width="20" height="70" rx="4" fill="#1D201D" stroke="#2A2E2A" stroke-width="2"/>
+  <!-- encosto vertical -->
+  <rect x="128" y="55" width="44" height="150" rx="10" fill="#1D201D" stroke="#2A2E2A" stroke-width="2"/>
+  <!-- figura -->
   <g fill="none" stroke="#C6FF3A" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="150" cy="90" r="16" fill="#C6FF3A" stroke="none"/>
-    <path d="M150 106 L150 190" />
-    <path d="M150 130 L70 100" />
-    <path d="M150 130 L230 100" />
+    <circle cx="150" cy="86" r="15" fill="#C6FF3A" stroke="none"/>
+    <path d="M150 101 L150 178" />
+    <path d="M150 200 L150 275" />
+    <path d="M150 128 L82 104" />
+    <path d="M150 128 L218 104" />
   </g>
-  <circle cx="65" cy="98" r="10" fill="none" stroke="#5FBFAE" stroke-width="5"/>
-  <circle cx="235" cy="98" r="10" fill="none" stroke="#5FBFAE" stroke-width="5"/>
-  <text x="150" y="270" text-anchor="middle" fill="#A7ADA6" font-family="Inter, sans-serif" font-size="13">Sentado, braços abertos segurando as alças</text>
+  <!-- almofadas do peck deck, bem abertas -->
+  <rect x="58" y="90" width="30" height="34" rx="8" fill="none" stroke="#5FBFAE" stroke-width="5"/>
+  <rect x="212" y="90" width="30" height="34" rx="8" fill="none" stroke="#5FBFAE" stroke-width="5"/>
+  <text x="150" y="264" text-anchor="middle" fill="#A7ADA6" font-family="Inter, sans-serif" font-size="13">Sentado, braços abertos nas almofadas</text>
 </svg>
