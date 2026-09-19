@@ -4,10 +4,12 @@ import tailwindcss from '@tailwindcss/vite'
 import path from 'path'
 
 export default defineConfig({
-  // Necessário porque o GitHub Pages publica o projeto em
-  // https://seu-usuario.github.io/biofit/ (subpasta com o nome do repo),
-  // não na raiz do domínio.
-  base: '/biofit/',
+  // No GitHub Pages o projeto fica em https://seu-usuario.github.io/biofit/
+  // (subpasta com o nome do repo), então precisa de base '/biofit/'.
+  // Já no app nativo (Capacitor) o app carrega direto na raiz do WebView,
+  // então o build pro celular precisa de base '/'. Alternamos com a env
+  // CAPACITOR=true, setada no script de build do app (veja package.json).
+  base: process.env.CAPACITOR ? '/' : '/biofit/',
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {

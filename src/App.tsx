@@ -29,7 +29,7 @@ export default function App() {
   return (
     <ErrorBoundary>
       <AuthProvider>
-        <BrowserRouter basename="/biofit">
+        <BrowserRouter basename={import.meta.env.VITE_CAPACITOR ? undefined : '/biofit'}>
           <MobileFrame>
             <Suspense fallback={<RouteFallback />}>
               <Routes>

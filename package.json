@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:app": "CAPACITOR=true VITE_CAPACITOR=true tsc -b && CAPACITOR=true VITE_CAPACITOR=true vite build",
     "lint": "oxlint",
     "preview": "vite preview"
   },
